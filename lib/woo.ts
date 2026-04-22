@@ -85,7 +85,7 @@ export async function getProducts(params?: {
 
   const res = await fetch(url, {
     headers: buildHeaders(),
-    next: { revalidate: 300 },
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -103,7 +103,7 @@ export async function getProductBySlug(slug: string) {
 
   const res = await fetch(url, {
     headers: buildHeaders(),
-    next: { revalidate: 300 },
+    cache: "no-store",
   });
 
   if (!res.ok) {
