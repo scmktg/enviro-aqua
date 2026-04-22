@@ -7,8 +7,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default async function HomePage() {
-  const products = await getProducts({ per_page: 8 });
-
+let products: Awaited<ReturnType<typeof getProducts>> = [];
+  try {
+    products = await getProducts({ per_page: 8 });
+  } catch (err) {
+    console.error("Failed to load products:", err);
+  }
+  
   return (
     <main className="min-h-screen">
       {/* Hero */}
