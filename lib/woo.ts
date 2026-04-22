@@ -1,8 +1,28 @@
 // lib/woo.ts
 const WOO_URL = process.env.NEXT_PUBLIC_WOO_URL;
+const WP_APP_USERNAME = process.env.WP_APP_USERNAME;
+const WP_APP_PASSWORD = process.env.WP_APP_PASSWORD;
 
 if (!WOO_URL) {
   throw new Error("NEXT_PUBLIC_WOO_URL is not set in .env.local");
+}
+
+// Build a Basic Auth header from WP Application Password credentials.
+// This helps requests pass through host-level bot protection.
+function buildAuthHeader(): Record<string, string> {
+  if (!WP_APP_USERNAME || !WP_APP_PASSWORD) return {};
+  const credentials = `${WP_APP_USERNAME}:${WP_APP_PASSWORD}`;
+  const encoded = Buffer.from(credentials).toString("base64");
+  return { Authorization: `Basic ${encoded}` };
+}
+
+// Default headers for all Woo Store API requests
+function buildHeaders(): HeadersInit {
+  return {
+    "User-Agent": "Mozilla/5.0 (compatible; EnviroAqua-Storefront/1.0)",
+    Accept: "application/json",
+    ...buildAuthHeader(),
+  };
 }
 
 // Types for what we get back from Woo Store API
@@ -64,12 +84,14 @@ export async function getProducts(params?: {
   const url = `${WOO_URL}/wp-json/wc/store/v1/products?${searchParams.toString()}`;
 
   const res = await fetch(url, {
-    // Cache on the server for 5 minutes
+    headers: buildHeaders(),
     next: { revalidate: 300 },
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch products: ${res.status}`);
+    throw new Error(
+      `Failed to fetch products: ${res.status} ${res.statusText}`
+    );
   }
 
   return (await res.json()) as WooProduct[];
@@ -80,18 +102,21 @@ export async function getProductBySlug(slug: string) {
   const url = `${WOO_URL}/wp-json/wc/store/v1/products?slug=${slug}`;
 
   const res = await fetch(url, {
+    headers: buildHeaders(),
     next: { revalidate: 300 },
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch product: ${res.status}`);
+    throw new Error(
+      `Failed to fetch product: ${res.status} ${res.statusText}`
+    );
   }
 
   const products = (await res.json()) as WooProduct[];
   return products[0] ?? null;
 }
 
-// Format a price string from Woo (returned in minor units, e.g. "6995" = $69.95)
+// Format a price from Woo (returned in minor units, e.g. "6995" = $69.95)
 export function formatPrice(
   price: string,
   minorUnit: number = 2,
