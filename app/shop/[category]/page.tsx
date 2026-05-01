@@ -1,156 +1,204 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import {
-  getProductsByCategory,
-  summariseFacets,
-  filterProducts,
-  sortProducts,
-  getPopularForCategory,
-  type SortKey,
-} from "@/lib/catalogue";
-import { getCategory, CATEGORIES } from "@/lib/categories";
-import { CategoryLandingHeader } from "@/components/sections/CategoryLanding";
-import { FilterRail } from "@/components/sections/FilterRail";
-import { ActiveFilters } from "@/components/sections/ActiveFilters";
-import { SortMenu } from "@/components/sections/SortMenu";
-import { ProductGrid } from "@/components/sections/ProductGrid";
-import { PopularRail } from "@/components/sections/PopularRail";
+"use client";
+
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCart, useCartLines } from "@/lib/stores/cart-store";
+import { CartLineItem } from "@/components/sections/CartLineItem";
 import { Breadcrumbs } from "@/components/sections/Breadcrumbs";
-import { breadcrumbJsonLd } from "@/lib/seo";
-
-interface PageProps {
-  params: Promise<{ category: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}
-
-export async function generateStaticParams() {
-  return CATEGORIES.map((c) => ({ category: c.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { category: categorySlug } = await params;
-  const category = getCategory(categorySlug);
-  if (!category) return {};
-  return {
-    title: `${category.heading} — Australia-wide Delivery`,
-    description: category.subhead,
-    alternates: {
-      canonical: `/shop/${category.slug}`,
-    },
-    openGraph: {
-      title: `${category.heading} | Enviro Aqua`,
-      description: category.subhead,
-      url: `/shop/${category.slug}`,
-    },
-  };
-}
+import { Button, ButtonLink } from "@/components/ui/Button";
+import { Price } from "@/components/ui/Price";
+import { formatPrice } from "@/lib/format";
+import { BUSINESS } from "@/lib/business";
+import { getDispatchStatus } from "@/lib/dispatch";
 
 /**
- * Build the active-facet map from URL searchParams, ignoring control keys
- * (sort, page, q) so they don't end up applied as facet filters.
+ * Reads the ?error=... query param and renders an inline notice when
+ * present. Lives in its own component so we can wrap it in a Suspense
+ * boundary in the parent — Next.js 15 requires useSearchParams to be
+ * inside Suspense or the page can't be statically prerendered.
  */
-function buildActiveFacets(
-  searchParams: Record<string, string | string[] | undefined>
-): Record<string, string[]> {
-  const ignore = new Set(["sort", "page", "q"]);
-  const out: Record<string, string[]> = {};
-  for (const [key, value] of Object.entries(searchParams)) {
-    if (ignore.has(key) || value === undefined) continue;
-    out[key] = Array.isArray(value) ? value : [value];
-  }
-  return out;
-}
-
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: PageProps) {
-  const { category: categorySlug } = await params;
-  const sp = await searchParams;
-  const category = getCategory(categorySlug);
-  if (!category) notFound();
-
-  const all = getProductsByCategory(category.slug);
-  const facets = summariseFacets(all);
-  const active = buildActiveFacets(sp);
-  const filtered = filterProducts(all, active);
-  const sortKey = (sp.sort as SortKey | undefined) ?? "featured";
-  const products = sortProducts(filtered, sortKey);
-  const hasActiveFilters = Object.keys(active).length > 0;
-  const popular = hasActiveFilters ? [] : getPopularForCategory(category.slug);
-  const showRail = facets.length > 0;
-
-  const trail = [
-    { label: "Home", url: "/" },
-    { label: category.name, url: `/shop/${category.slug}` },
-  ];
+function CheckoutErrorBanner() {
+  const searchParams = useSearchParams();
+  const errorCode = searchParams.get("error");
+  if (errorCode !== "checkout") return null;
 
   return (
-    <div className="container-site py-8 lg:py-10">
-      <Breadcrumbs trail={trail.map((t) => ({ label: t.label, href: t.url }))} />
-      <div className="mt-6">
-        <CategoryLandingHeader category={category} />
-      </div>
-
-      {popular.length > 0 && (
-        <PopularRail
-          products={popular}
-          heading={popularHeadingFor(category.slug)}
-          subhead={popularSubheadFor(category.slug)}
-        />
-      )}
-
-      <div
-        className={`grid grid-cols-1 gap-10 lg:gap-12 mt-12 lg:mt-16 ${
-          showRail ? "lg:grid-cols-[240px_minmax(0,1fr)]" : ""
-        }`}
-      >
-        {showRail && <FilterRail facets={facets} />}
-        <div className="min-w-0">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <p className="text-sm text-muted tabular">
-              <span className="text-ink font-medium">{products.length}</span>{" "}
-              {products.length === 1 ? "product" : "products"}
-            </p>
-            <SortMenu />
-          </div>
-          <ActiveFilters />
-          <ProductGrid products={products} />
-        </div>
-      </div>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd(trail) }}
-      />
-    </div>
+    <aside
+      role="alert"
+      className="mt-6 border-l-2 border-danger bg-danger/5 p-4 max-w-2xl rounded-sm"
+    >
+      <p className="text-sm font-medium text-danger">
+        We couldn&rsquo;t start your checkout.
+      </p>
+      <p className="text-sm text-ink/85 mt-2 leading-relaxed">
+        One of the items in your cart isn&rsquo;t available right now — stock
+        may have changed since you added it. Try again, or call us on{" "}
+        <a
+          href={`tel:${BUSINESS.phone.tel}`}
+          className="text-brand hover:text-brand-700 underline underline-offset-4 tabular font-medium"
+        >
+          {BUSINESS.phone.display}
+        </a>{" "}
+        and we&rsquo;ll sort it out.
+      </p>
+    </aside>
   );
 }
 
-function popularHeadingFor(slug: string): string {
-  switch (slug) {
-    case "water-filters":
-      return "The four systems we ship most often.";
-    case "commercial-bubblers":
-      return "What schools, gyms and offices are specifying.";
-    case "kitchen-taps":
-      return "Most-installed kitchen taps.";
-    case "bathroom":
-      return "Bathroom essentials.";
-    default:
-      return "Most popular.";
-  }
-}
+export default function CartPage() {
+  const lines = useCartLines();
+  const totals = useCart((s) => s.totals)();
+  const [submitting, setSubmitting] = useState(false);
+  const dispatch = getDispatchStatus();
 
-function popularSubheadFor(slug: string): string | undefined {
-  switch (slug) {
-    case "water-filters":
-      return "Hand-picked across whole-house, under-sink, RO and bench-top — one for every common Australian setup.";
-    case "commercial-bubblers":
-      return "WaterMark certified, vandal-resistant 304 stainless, multi-site quoting available.";
-    default:
-      return undefined;
-  }
+  const onCheckout = async () => {
+    setSubmitting(true);
+    try {
+      const res = await fetch("/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lines }),
+      });
+      const data = (await res.json()) as { checkoutUrl: string };
+      window.location.href = data.checkoutUrl;
+    } catch {
+      setSubmitting(false);
+    }
+  };
+
+  const empty = lines.length === 0;
+
+  return (
+    <div className="container-site py-8 lg:py-10">
+      <Breadcrumbs
+        trail={[
+          { label: "Home", href: "/" },
+          { label: "Cart", href: "/cart" },
+        ]}
+      />
+      <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mt-6">
+        Your cart
+      </h1>
+
+      {/*
+        Suspense boundary required by Next.js 15: any component that calls
+        useSearchParams must be inside one, or the parent page can't be
+        statically prerendered. Empty fallback is fine — the banner only
+        shows on error and we can tolerate a beat of nothing in its place
+        on first paint.
+      */}
+      <Suspense fallback={null}>
+        <CheckoutErrorBanner />
+      </Suspense>
+
+      {empty ? (
+        <div className="mt-12 max-w-xl">
+          <p className="text-base mb-2">Your cart is empty.</p>
+          <p className="text-base text-muted mb-6">
+            Not sure where to start? The filter finder narrows it down in three
+            questions, or browse the full catalogue.
+          </p>
+          <div className="flex gap-3">
+            <ButtonLink href="/help/which-filter">
+              Use the filter finder
+            </ButtonLink>
+            <ButtonLink href="/shop" variant="ghost">
+              Browse the catalogue
+            </ButtonLink>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 mt-10">
+          <div>
+            <div
+              className={`rounded-sm px-5 py-4 border mb-6 ${
+                dispatch.beforeCutoff
+                  ? "bg-brand-50 border-brand-50"
+                  : "bg-mist border-line"
+              }`}
+            >
+              <p className="text-sm flex items-start gap-2">
+                <span
+                  aria-hidden
+                  className={
+                    dispatch.beforeCutoff ? "text-brand" : "text-muted"
+                  }
+                >
+                  {dispatch.beforeCutoff ? "⏱" : "🕒"}
+                </span>
+                <span
+                  className={
+                    dispatch.beforeCutoff
+                      ? "font-medium text-brand"
+                      : "text-ink/85"
+                  }
+                >
+                  {dispatch.message}
+                </span>
+              </p>
+            </div>
+
+            <ul className="divide-y divide-line border-t border-line">
+              {lines.map((line) => (
+                <CartLineItem key={line.id} line={line} />
+              ))}
+            </ul>
+          </div>
+
+          <aside className="lg:sticky lg:top-32 self-start bg-mist rounded-sm border border-line p-6">
+            <h2 className="text-base font-semibold tracking-tight mb-4">
+              Order summary
+            </h2>
+            <dl className="space-y-2 text-sm">
+              <div className="flex items-center justify-between">
+                <dt className="text-muted">Subtotal</dt>
+                <dd className="tabular">{formatPrice(totals.subtotal)}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-muted">Shipping</dt>
+                <dd className="tabular text-muted text-right">
+                  From {formatPrice(totals.shippingFromPrice)}
+                  <span className="block text-xs">
+                    or free Click &amp; Collect
+                  </span>
+                </dd>
+              </div>
+              <div className="flex items-center justify-between pt-3 mt-3 border-t border-line">
+                <dt className="text-base font-semibold">Subtotal</dt>
+                <dd>
+                  <Price amount={totals.total} size="lg" showIncTax />
+                </dd>
+              </div>
+            </dl>
+            <p className="text-xs text-muted mt-3">
+              Final shipping is calculated at checkout based on item size and
+              your postcode. Local pickup from our Wyong showroom is always
+              free.
+            </p>
+            <Button
+              block
+              size="lg"
+              className="mt-4"
+              onClick={onCheckout}
+              disabled={submitting}
+            >
+              {submitting ? "Redirecting…" : "Secure checkout"}
+            </Button>
+            <ButtonLink
+              href="/shop"
+              block
+              size="lg"
+              variant="secondary"
+              className="mt-3 hover:bg-ink/90 hover:text-paper hover:ring-0"
+            >
+              Continue shopping
+            </ButtonLink>
+            <p className="text-xs text-muted mt-3 text-center">
+              Checkout secured by Shopify · Apple Pay · Google Pay
+            </p>
+          </aside>
+        </div>
+      )}
+    </div>
+  );
 }

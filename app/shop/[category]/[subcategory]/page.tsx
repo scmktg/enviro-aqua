@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import {
   getProductsBySubCategory,
@@ -106,16 +107,22 @@ export default async function SubCategoryPage({
           showRail ? "lg:grid-cols-[240px_minmax(0,1fr)]" : ""
         }`}
       >
-        {showRail && <FilterRail facets={facets} />}
+        <Suspense fallback={null}>
+          {showRail && <FilterRail facets={facets} />}
+        </Suspense>
         <div className="min-w-0">
           <div className="flex items-center justify-between gap-4 mb-6">
             <p className="text-sm text-muted tabular">
               <span className="text-ink font-medium">{products.length}</span>{" "}
               {products.length === 1 ? "product" : "products"}
             </p>
-            <SortMenu />
+            <Suspense fallback={null}>
+              <SortMenu />
+            </Suspense>
           </div>
-          <ActiveFilters />
+          <Suspense fallback={null}>
+            <ActiveFilters />
+          </Suspense>
           <ProductGrid products={products} />
         </div>
       </div>

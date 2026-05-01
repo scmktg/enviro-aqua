@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCart, useCartLines } from "@/lib/stores/cart-store";
 import { CartLineItem } from "@/components/sections/CartLineItem";
@@ -11,13 +11,45 @@ import { formatPrice } from "@/lib/format";
 import { BUSINESS } from "@/lib/business";
 import { getDispatchStatus } from "@/lib/dispatch";
 
+/**
+ * Reads the ?error=... query param and renders an inline notice when
+ * present. Lives in its own component so we can wrap it in a Suspense
+ * boundary in the parent — Next.js 15 requires useSearchParams to be
+ * inside Suspense or the page can't be statically prerendered.
+ */
+function CheckoutErrorBanner() {
+  const searchParams = useSearchParams();
+  const errorCode = searchParams.get("error");
+  if (errorCode !== "checkout") return null;
+
+  return (
+    <aside
+      role="alert"
+      className="mt-6 border-l-2 border-danger bg-danger/5 p-4 max-w-2xl rounded-sm"
+    >
+      <p className="text-sm font-medium text-danger">
+        We couldn&rsquo;t start your checkout.
+      </p>
+      <p className="text-sm text-ink/85 mt-2 leading-relaxed">
+        One of the items in your cart isn&rsquo;t available right now — stock
+        may have changed since you added it. Try again, or call us on{" "}
+        <a
+          href={`tel:${BUSINESS.phone.tel}`}
+          className="text-brand hover:text-brand-700 underline underline-offset-4 tabular font-medium"
+        >
+          {BUSINESS.phone.display}
+        </a>{" "}
+        and we&rsquo;ll sort it out.
+      </p>
+    </aside>
+  );
+}
+
 export default function CartPage() {
   const lines = useCartLines();
   const totals = useCart((s) => s.totals)();
   const [submitting, setSubmitting] = useState(false);
   const dispatch = getDispatchStatus();
-  const searchParams = useSearchParams();
-  const errorCode = searchParams.get("error");
 
   const onCheckout = async () => {
     setSubmitting(true);
@@ -48,28 +80,16 @@ export default function CartPage() {
         Your cart
       </h1>
 
-      {errorCode === "checkout" && (
-        <aside
-          role="alert"
-          className="mt-6 border-l-2 border-danger bg-danger/5 p-4 max-w-2xl rounded-sm"
-        >
-          <p className="text-sm font-medium text-danger">
-            We couldn&rsquo;t start your checkout.
-          </p>
-          <p className="text-sm text-ink/85 mt-2 leading-relaxed">
-            One of the items in your cart isn&rsquo;t available right now —
-            stock may have changed since you added it. Try again, or call us
-            on{" "}
-            <a
-              href={`tel:${BUSINESS.phone.tel}`}
-              className="text-brand hover:text-brand-700 underline underline-offset-4 tabular font-medium"
-            >
-              {BUSINESS.phone.display}
-            </a>{" "}
-            and we&rsquo;ll sort it out.
-          </p>
-        </aside>
-      )}
+      {/*
+        Suspense boundary required by Next.js 15: any component that calls
+        useSearchParams must be inside one, or the parent page can't be
+        statically prerendered. Empty fallback is fine — the banner only
+        shows on error and we can tolerate a beat of nothing in its place
+        on first paint.
+      */}
+      <Suspense fallback={null}>
+        <CheckoutErrorBanner />
+      </Suspense>
 
       {empty ? (
         <div className="mt-12 max-w-xl">
@@ -79,7 +99,9 @@ export default function CartPage() {
             questions, or browse the full catalogue.
           </p>
           <div className="flex gap-3">
-            <ButtonLink href="/help/which-filter">Use the filter finder</ButtonLink>
+            <ButtonLink href="/help/which-filter">
+              Use the filter finder
+            </ButtonLink>
             <ButtonLink href="/shop" variant="ghost">
               Browse the catalogue
             </ButtonLink>
@@ -162,6 +184,15 @@ export default function CartPage() {
             >
               {submitting ? "Redirecting…" : "Secure checkout"}
             </Button>
+            <ButtonLink
+              href="/shop"
+              block
+              size="lg"
+              variant="secondary"
+              className="mt-3 hover:bg-ink/90 hover:text-paper hover:ring-0"
+            >
+              Continue shopping
+            </ButtonLink>
             <p className="text-xs text-muted mt-3 text-center">
               Checkout secured by Shopify · Apple Pay · Google Pay
             </p>
