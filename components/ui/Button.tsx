@@ -1,17 +1,24 @@
 import { forwardRef } from "react";
-import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 
 type Variant = "primary" | "secondary" | "ghost" | "link";
 type Size = "sm" | "md" | "lg";
 
+/**
+ * Shared visual props for both the button (action) and link (navigation)
+ * variants. Note that `children` is intentionally NOT declared here —
+ * it's inherited from each consumer's underlying HTML attributes type
+ * (ButtonHTMLAttributes / AnchorHTMLAttributes), which already types it
+ * as ReactNode. Declaring it here too creates an intersection conflict
+ * under React 19's stricter types.
+ */
 interface SharedProps {
   variant?: Variant;
   size?: Size;
   /** Stretch to fill its container — used inside cart drawer / forms. */
   block?: boolean;
-  children: ReactNode;
 }
 
 interface ButtonProps
