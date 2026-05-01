@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ink: #0a0a0a;
+    --color-paper: #ffffff;
+    --color-mist: #f5f6f7;
+    --color-line: #e5e7eb;
+    --color-muted: #6b7280;
+    --color-brand: #0b5fff;
+    --color-brand-700: #084acc;
+    --color-brand-50: #eaf1ff;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Sticky header overlays page content; account for it on hash-jumps. */
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  /* Tabular figures for prices, SKUs, and any spec-laden component. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Focus ring — branded, not the default blue browser ring. */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-paper), 0 0 0 4px var(--color-brand);
+    border-radius: 2px;
+  }
+
+  /* Buttons inside a black header use a paper-coloured outer ring. */
+  .on-dark :focus-visible {
+    box-shadow: 0 0 0 2px var(--color-ink), 0 0 0 4px var(--color-paper);
+  }
+
+  /* Long-form description rendered from the catalogue uses bullet markdown. */
+  .prose-spec {
+    line-height: 1.6;
+  }
+  .prose-spec strong {
+    font-weight: 600;
+  }
+  .prose-spec p {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@layer components {
+  .container-site {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1320px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Hairline above sections — replaces shadow-md as our default visual divider. */
+  .rule-top {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Hide native scrollbar on horizontal-scroll rails — the snap-x behaviour
+     and visible card edges are sufficient affordance. Used on the popular
+     rail and any other horizontal-overflow container. */
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Header ribbon vertical-rotate carousel. Strip contains 4 messages
+     duplicated (so 8 cells); we translate by 4 cell-heights over the loop
+     to keep the seam invisible. Each cell is 36px (h-9). 4 cells × 3s
+     dwell = 12s loop. Animation pauses on hover so users can read CTAs. */
+  @keyframes ribbon-rotate-y {
+    0%, 18% { transform: translateY(0); }
+    25%, 43% { transform: translateY(-36px); }
+    50%, 68% { transform: translateY(-72px); }
+    75%, 93% { transform: translateY(-108px); }
+    100% { transform: translateY(-144px); }
+  }
+  .ribbon-rotate {
+    animation: ribbon-rotate-y 16s linear infinite;
+  }
+  .ribbon-rotate:hover {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon-rotate {
+      animation: none;
+    }
+  }
+}
