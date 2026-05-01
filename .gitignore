@@ -9,5 +9,3 @@ out
 next-env.d.ts
 
 # Hardcoded local Shopify credentials — never commit
-lib/shopify/config.ts
-lib/shopify/config.ts
