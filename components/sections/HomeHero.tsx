@@ -1,20 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ButtonLink } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { getProductBySlug } from "@/lib/catalogue";
-import { Price } from "@/components/ui/Price";
 import { BUSINESS } from "@/lib/business";
+import { INSTALL_PACKAGE } from "@/lib/install-package";
 
 /**
- * Hero is a 2-column layout, not a centered-headline-over-photo. Left side
- * carries the conversion thesis (what / for whom / why) in three readable
- * blocks; right side anchors a real product with a real price so the
- * homepage isn't selling vibes — it's selling stock.
+ * Hero is two parallel value propositions:
+ *   Left  — Australia-wide ecommerce: shop water filters and bubblers,
+ *           same-day dispatch, primary commercial signal
+ *   Right — Central Coast install package as a local-only add-on,
+ *           clearly labelled so out-of-area visitors don't think this
+ *           is a local-only business
  *
- * Above the H1 sits the SEO-aware eyebrow ("Water Filters · Commercial
- * Bubblers · Australia-wide") so the first text on the page contains the
- * primary keyword cluster.
+ * Sizing strategy:
+ *   - On desktop (lg+), the hero fills the viewport minus the sticky
+ *     header (100px) and clamps to a sane minimum so it doesn't crush
+ *     on tall narrow desktops. Everything inside both columns is
+ *     vertically centred.
+ *   - On mobile/tablet, content flows naturally without height
+ *     constraints — phones can scroll, no need to compress.
+ *
+ * The H1 lives in the left column and carries the brand-level keyword
+ * cluster. The supporting sections below the hero (HomeWaterFilterTypes,
+ * HomeBubblerSpotlight, HomeLocalArea) carry deeper keyword work — the
+ * hero stays sharp and uncluttered.
  */
 export function HomeHero() {
   const featured = getProductBySlug(
@@ -24,58 +34,59 @@ export function HomeHero() {
   return (
     <section
       aria-label="Enviro Aqua — Australian water filter specialists"
-      className="border-b border-line"
+      className="border-b border-line lg:h-[calc(100vh-100px)] lg:min-h-[640px] lg:max-h-[860px] lg:flex lg:items-center"
     >
-      <div className="container-site grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 py-14 lg:py-20">
-        <div className="lg:col-span-7 flex flex-col justify-center">
+      <div className="container-site grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 py-12 lg:py-0 items-center w-full">
+        {/* Left — the ecommerce offer (primary) */}
+        <div className="lg:col-span-7 flex flex-col">
           <p className="text-xs uppercase tracking-[0.18em] text-muted mb-5">
-            Water Filters Australia · Whole House · Under Sink · RO · Bubblers
+            Australia-wide shipping · Same price retail or trade
           </p>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
+          <h1 className="text-4xl md:text-5xl lg:text-[52px] xl:text-[56px] font-semibold tracking-tight leading-[1.05]">
             Australia&rsquo;s water filter specialists.
-            <span className="block text-muted mt-2">
-              Same price, retail or trade.
-            </span>
           </h1>
-          <p className="text-lg text-ink/80 mt-7 max-w-prose leading-relaxed">
+          <p className="text-base lg:text-lg text-ink/75 mt-5 lg:mt-6 max-w-prose leading-relaxed">
             Whole-house, under-sink, bench-top and reverse osmosis water
-            filters — plus WaterMark-certified commercial drinking bubblers
-            for schools, gyms and offices. Australian-stocked, plumber-grade,
-            shipped from our Wyong NSW warehouse on the Central Coast.
+            filters. WaterMark-certified commercial bubblers. Same-day
+            dispatch from Wyong NSW on orders before {BUSINESS.dispatch.cutoffTime}.
           </p>
 
-          <div className="mt-9 flex flex-col sm:flex-row gap-3">
-            <ButtonLink href="/help/which-filter" size="lg">
-              Use the filter finder
-            </ButtonLink>
-            <ButtonLink href="/shop/water-filters" size="lg" variant="ghost">
+          <div className="mt-7 lg:mt-8 flex flex-col sm:flex-row gap-3">
+            <ButtonLink href="/shop/water-filters" size="lg">
               Shop water filters
+            </ButtonLink>
+            <ButtonLink
+              href="/shop/commercial-bubblers"
+              size="lg"
+              variant="ghost"
+            >
+              Shop bubblers
             </ButtonLink>
           </div>
 
-          <ul className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-6 text-sm">
+          {/* Inline shipping reassurance — the "we're a real ecom site" beat */}
+          <ul className="mt-8 lg:mt-10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-x-6 sm:gap-y-0 text-sm text-ink/75">
             {[
-              "Australian-stocked range",
-              `Same-day dispatch (before ${BUSINESS.dispatch.cutoffTime})`,
-              "Click & Collect — Wyong",
-              "Trade-friendly pricing",
-              "Plumber-grade product",
-              "Real humans on chat",
-            ].map((point) => (
-              <li
-                key={point}
-                className="flex items-start gap-2 text-ink/80"
-              >
+              `Same-day dispatch · before ${BUSINESS.dispatch.cutoffTime}`,
+              "Tracked freight, every postcode",
+              "Free Click & Collect — Wyong",
+            ].map((point, i) => (
+              <li key={point} className="flex items-center gap-2.5">
+                {i > 0 && (
+                  <span aria-hidden className="hidden sm:inline text-muted">
+                    ·
+                  </span>
+                )}
                 <svg
                   viewBox="0 0 16 16"
                   fill="none"
-                  className="w-4 h-4 text-brand flex-shrink-0 mt-0.5"
+                  className="w-4 h-4 text-brand flex-shrink-0"
                   aria-hidden
                 >
                   <path
                     d="m3.5 8.5 3 3 6-7"
                     stroke="currentColor"
-                    strokeWidth="1.75"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -86,37 +97,68 @@ export function HomeHero() {
           </ul>
         </div>
 
+        {/*
+          Right — Central Coast install package, clearly labelled as a
+          LOCAL service. The "Central Coast NSW only" framing is
+          deliberate and prominent so out-of-area visitors don't think
+          we're a local-only business.
+        */}
         {featured && (
           <Link
-            href={`/product/${featured.slug}`}
+            href="/install/whole-house"
             className="lg:col-span-5 group block"
           >
-            <article className="relative bg-mist h-full p-8 flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <Badge tone="brand">Best seller — whole house</Badge>
-                <Badge tone="outline">In stock</Badge>
+            <article className="relative bg-mist overflow-hidden h-full flex flex-col">
+              {/* Banner — local-only label is the FIRST thing the eye lands on */}
+              <div className="bg-ink text-paper px-5 py-3 flex items-center gap-2.5 flex-shrink-0">
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="w-4 h-4 text-paper/70 flex-shrink-0"
+                  aria-hidden
+                >
+                  <path
+                    d="M8 1.5c2.5 0 4.5 2 4.5 4.5 0 3.5-4.5 8.5-4.5 8.5S3.5 9.5 3.5 6c0-2.5 2-4.5 4.5-4.5Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle cx="8" cy="6" r="1.5" fill="currentColor" />
+                </svg>
+                <p className="text-xs uppercase tracking-[0.16em] font-medium">
+                  Central Coast Residents · Installation package
+                </p>
               </div>
-              <div className="relative aspect-[4/5] w-full">
+
+              <div className="relative flex-1 min-h-[240px]">
                 <Image
                   src={featured.images[0]!}
-                  alt={`${featured.title} — front view`}
+                  alt="Triple Big Blue whole-house water filter — Central Coast install package"
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="object-contain p-8 lg:p-10 transition-transform duration-500 group-hover:scale-[1.02]"
                   priority
                 />
               </div>
-              <div className="mt-6 pt-6 border-t border-line">
-                <p className="text-xs uppercase tracking-[0.14em] text-muted">
-                  Triple Big Blue · 20&Prime; × 4.5&Prime;
+
+              <div className="bg-paper border-t border-line px-5 py-5 flex-shrink-0">
+                <p className="text-base font-medium text-ink leading-snug">
+                  Whole-house filter, professionally installed.
                 </p>
-                <h2 className="text-lg font-medium mt-1.5 tracking-tight">
-                  3-stage whole-house filtration. Treats every tap.
-                </h2>
-                <div className="flex items-end justify-between mt-4">
-                  <Price amount={featured.price} size="xl" showIncTax />
+                <p className="text-sm text-muted mt-1 leading-relaxed">
+                  Triple Big Blue + licensed local plumber + 12 months of
+                  cartridges, all-inclusive.
+                </p>
+                <div className="flex items-end justify-between mt-4 pt-4 border-t border-line">
+                  <div>
+                    <p className="text-2xl font-semibold tracking-tight tabular text-ink leading-none">
+                      ${INSTALL_PACKAGE.price.toLocaleString()}
+                    </p>
+                    <p className="text-xs text-muted mt-1">
+                      Inc. GST · No payment now
+                    </p>
+                  </div>
                   <span className="text-sm font-medium text-brand inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-fast">
-                    Shop now
+                    Request install
                     <span aria-hidden>→</span>
                   </span>
                 </div>

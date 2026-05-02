@@ -9,6 +9,7 @@ import { BUSINESS } from "@/lib/business";
 import { MegaMenu } from "./MegaMenu";
 import { HeaderRibbon } from "./HeaderRibbon";
 import { SearchOverlay } from "./SearchOverlay";
+import Image from "next/image";
 
 /**
  * Header is now a black ribbon over a white nav bar. The ribbon carries
@@ -215,21 +216,15 @@ export function Header() {
 
 function Logo() {
   return (
-    <span className="inline-flex items-center gap-2">
-      <svg
-        viewBox="0 0 32 32"
-        className="w-6 h-6 text-brand"
-        aria-hidden
-        fill="none"
-      >
-        <path
-          d="M16 4c4 6 8 10 8 15a8 8 0 0 1-16 0c0-5 4-9 8-15Z"
-          fill="currentColor"
-        />
-      </svg>
-      <span className="text-base font-semibold tracking-tight text-ink">
-        Enviro Aqua
-      </span>
+    <span className="inline-flex items-center">
+      <Image
+        src="/logo.webp"
+        alt="Enviro Aqua"
+        width={180}
+        height={40}
+        priority
+        className="h-9 w-auto"
+      />
     </span>
   );
 }

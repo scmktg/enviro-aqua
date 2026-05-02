@@ -5,96 +5,115 @@ import { Price } from "@/components/ui/Price";
 import { ButtonLink } from "@/components/ui/Button";
 
 /**
- * Bubbler spotlight — secondary priority for SEO, deserves its own beat.
- * Layout is asymmetric (60/40 image/copy) and differs from the hero
- * (which was copy-left, image-right). This avoids a stacked-blocks rhythm.
- *
- * Real product, real price. The copy speaks to the actual buyer
- * (procurement, facilities) rather than retail romance.
+ * Bubbler section now showcases all three of our WaterMark-certified
+ * commercial bubblers (the only category where every SKU genuinely
+ * carries WaterMark to AS/NZS 3497). Routes to a dedicated commercial
+ * landing page rather than the regular sub-category PLP because the
+ * B2B buyer needs different context (compliance documentation,
+ * fit-out spec sheets, multi-site quoting) than a retail shopper.
  */
-export function HomeBubblerSpotlight() {
-  const bubbler = getProductBySlug(
-    "commercial-filtered-water-bubbler-square-stainless-steel-watermark-certified"
-  );
+const FEATURED_BUBBLERS = [
+  "commercial-filtered-water-bubbler-square-stainless-steel-watermark-certified",
+  "commercial-filtered-cold-water-bubbler-round-stainless-steel-watermark-certified",
+  "commercial-rust-free-filtered-cold-water-bubbler-watermark-certified",
+];
 
-  if (!bubbler) return null;
+export function HomeBubblerSpotlight() {
+  const bubblers = FEATURED_BUBBLERS.map((slug) =>
+    getProductBySlug(slug)
+  ).filter((b): b is NonNullable<typeof b> => Boolean(b));
+
+  if (bubblers.length === 0) return null;
 
   return (
     <section
       aria-labelledby="bubbler-heading"
       className="container-site py-20 lg:py-24"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-        <Link
-          href={`/product/${bubbler.slug}`}
-          className="lg:col-span-7 group block"
-        >
-          <div className="relative aspect-[4/3] bg-mist rounded-sm overflow-hidden">
-            {bubbler.images[0] && (
-              <Image
-                src={bubbler.images[0]}
-                alt={`${bubbler.title} — for schools, gyms and offices`}
-                fill
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                className="object-contain p-12 transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-            )}
-          </div>
-        </Link>
-        <div className="lg:col-span-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-muted mb-4">
-            Commercial Bubblers
+      <header className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+        <div className="lg:col-span-7">
+          <p className="text-xs uppercase tracking-[0.18em] text-muted mb-3">
+            Commercial drinking water · WaterMark certified
           </p>
           <h2
             id="bubbler-heading"
             className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight"
           >
-            Filtered drinking water for high-traffic Australian sites.
+            Filtered drinking bubblers for schools, gyms and offices.
           </h2>
-          <p className="text-base text-ink/80 mt-5 leading-relaxed">
-            WaterMark certified. 304 stainless steel. Direct-connect to mains
-            with a built-in filter. Specified by schools, fitness chains and
-            councils across Australia. Multi-site project pricing on five units
-            or more.
-          </p>
-
-          <ul className="mt-7 space-y-3 text-sm">
-            {[
-              "WaterMark certified to AS/NZS 3497",
-              "Vandal-resistant 304 stainless construction",
-              "Pre-filter + carbon block included",
-              "Annual service kit available",
-            ].map((point) => (
-              <li key={point} className="flex items-start gap-2.5 text-ink/80">
-                <svg
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="w-4 h-4 text-brand flex-shrink-0 mt-0.5"
-                  aria-hidden
-                >
-                  <path
-                    d="m3.5 8.5 3 3 6-7"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                {point}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8 pt-6 border-t border-line flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.14em] text-muted mb-1">
-                From
-              </p>
-              <Price amount={bubbler.price} size="xl" showIncTax />
-            </div>
-            <ButtonLink href="/shop/commercial-bubblers">Shop bubblers</ButtonLink>
-          </div>
         </div>
+        <p className="lg:col-span-5 text-base text-ink/80 leading-relaxed lg:pt-8">
+          Three commercial-grade models, all WaterMark certified to
+          AS/NZS 3497, all 304 stainless steel, all in stock at our
+          Wyong warehouse for next-day dispatch. Specified by Australian
+          schools, gyms, councils and body corporates since 2019.
+        </p>
+      </header>
+
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+        {bubblers.map((bubbler) => (
+          <li key={bubbler.id}>
+            <Link
+              href="/commercial-bubblers"
+              className="group block h-full bg-paper border border-line hover:border-ink rounded-sm overflow-hidden transition-colors duration-fast"
+            >
+              <article className="h-full flex flex-col">
+                <div className="relative aspect-[4/3] bg-mist">
+                  {bubbler.images[0] && (
+                    <Image
+                      src={bubbler.images[0]}
+                      alt={bubbler.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-contain p-8 transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                  )}
+                  <span className="absolute top-3 left-3 inline-flex items-center h-6 px-2 bg-paper border border-line text-xs font-medium text-ink rounded-sm">
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className="w-3 h-3 text-brand mr-1.5"
+                      aria-hidden
+                    >
+                      <path
+                        d="m3.5 8.5 3 3 6-7"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    WaterMark certified
+                  </span>
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-base font-semibold tracking-tight leading-snug flex-1">
+                    {bubbler.title.replace(
+                      " — WaterMark Certified",
+                      ""
+                    )}
+                  </h3>
+                  <div className="flex items-end justify-between mt-4 pt-4 border-t border-line">
+                    <Price amount={bubbler.price} size="md" />
+                    <span className="text-sm font-medium text-brand inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-fast">
+                      View
+                      <span aria-hidden>→</span>
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-10 flex flex-col sm:flex-row gap-3">
+        <ButtonLink href="/commercial-bubblers">
+          View commercial bubbler range
+        </ButtonLink>
+        <ButtonLink href="/contact" variant="ghost">
+          Get a multi-site quote
+        </ButtonLink>
       </div>
     </section>
   );

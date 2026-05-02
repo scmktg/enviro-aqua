@@ -55,6 +55,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
     },
     {
+      url: `${BASE}/install/whole-house`,
+      lastModified: now,
+      priority: 0.9,
+      changeFrequency: "monthly",
+    },
+    {
+      url: `${BASE}/commercial-bubblers`,
+      lastModified: now,
+      priority: 0.85,
+      changeFrequency: "monthly",
+    },
+    {
       url: `${BASE}/showroom`,
       lastModified: now,
       priority: 0.75,

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { BUSINESS } from "@/lib/business";
 import { HomeHero } from "@/components/sections/HomeHero";
-import { HomeWaterFilterTypes } from "@/components/sections/HomeWaterFilterTypes";
-import { HomeDecisionMatrix } from "@/components/sections/HomeDecisionMatrix";
+import { HomeBuyingPaths } from "@/components/sections/HomeBuyingPaths";
+import { HomeFilterFinder } from "@/components/sections/HomeFilterFinder";
 import { HomeFeaturedProducts } from "@/components/sections/HomeFeaturedProducts";
 import { HomeBubblerSpotlight } from "@/components/sections/HomeBubblerSpotlight";
 import { HomeKitchenTapsPairing } from "@/components/sections/HomeKitchenTapsPairing";
@@ -21,33 +21,30 @@ export const metadata: Metadata = {
 };
 
 /**
- * Homepage section ordering is deliberate — it tells Google what this site
- * is primarily about:
+ * Homepage section ordering reflects the actual customer journey:
  *
- *   1. Hero               — "water filter specialists" H1
- *   2. WaterFilterTypes   — long-form, 4 sub-category cards (whole-house,
- *                           under-sink, bench-top, RO). Bulk of
- *                           "water filter [type]" keyword weight lives here.
- *   3. DecisionMatrix     — internal links into water-filter sub-categories
- *   4. FeaturedProducts   — most-bought water filters
- *   5. BubblerSpotlight   — secondary specialty (commercial bubblers)
- *   6. KitchenTapsPairing — taps positioned as accessories to RO systems
- *   7. Reviews            — real Google/Facebook social proof
- *   8. LocalArea          — Central Coast SEO strip + NAP block
- *   9. BathroomStrip      — minimal, single-line, deliberately small
- *  10. EmailCapture       — cartridge replacement reminders
+ *   1. Hero               — Australia-wide ecom + Central Coast install
+ *   2. BuyingPaths        — "Where do you want filtered water?" — needs-based
+ *   3. FilterFinder       — One-question shortcut for fast routing
+ *   4. FeaturedProducts   — Most-bought systems (social proof at price level)
+ *   5. BubblerSpotlight   — Three certified commercial bubblers → /commercial-bubblers
+ *   6. KitchenTapsPairing — Taps as accessories to filtration
+ *   7. Reviews            — Real Google/Facebook social proof
+ *   8. LocalArea          — Central Coast SEO + NAP block
+ *   9. BathroomStrip      — Minimal de-emphasised mention
+ *  10. EmailCapture       — Cartridge replacement reminders
  *
- * The bathroom category is intentionally last and minimal. The local-area
- * section sits high enough to register as a topical signal but late
- * enough that the dominant keyword cluster (water filters Australia) gets
- * established first.
+ * Removed since previous version:
+ *   - HomeWaterFilterTypes (ownership-framed, replaced by HomeBuyingPaths)
+ *   - HomeDecisionMatrix (two-step rent/own → supply, replaced by
+ *     single-question HomeFilterFinder)
  */
 export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <HomeWaterFilterTypes />
-      <HomeDecisionMatrix />
+      <HomeBuyingPaths />
+      <HomeFilterFinder />
       <HomeFeaturedProducts />
       <HomeBubblerSpotlight />
       <HomeKitchenTapsPairing />
