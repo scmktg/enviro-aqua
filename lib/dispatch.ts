@@ -44,14 +44,10 @@ export function getDispatchStatus(): DispatchStatus {
 
   if (hour < cutoffHour) {
     const minutesLeft = 60 * (cutoffHour - hour) - minute;
-    const hoursLeft = Math.floor(minutesLeft / 60);
     return {
       beforeCutoff: true,
       isWeekend: false,
-      message:
-        hoursLeft >= 1
-          ? `Order in the next ${hoursLeft}h for same-day dispatch from Wyong.`
-          : `Order in the next ${minutesLeft}min for same-day dispatch from Wyong.`,
+      message: `Order in the next ${formatTimeLeft(minutesLeft)} for same-day dispatch from Wyong.`,
     };
   }
 
@@ -60,4 +56,42 @@ export function getDispatchStatus(): DispatchStatus {
     isWeekend: false,
     message: `Orders placed after ${cutoffDisplay} dispatch the next business day.`,
   };
+}
+
+/**
+ * Format minutes-remaining for the cart copy. Rules:
+ *
+ *   - Under 60min → "45min" (urgency is in the minute count)
+ *   - Exactly on the hour → "2h" (don't append " 0min", reads weirdly)
+ *   - Otherwise → "2h 15min" (preserve minutes — losing them
+ *     undersells urgency near the boundary)
+ *
+ * Examples:
+ *   119 → "1h 59min"
+ *   120 → "2h"
+ *   89  → "1h 29min"
+ *   59  → "59min"
+ *   1   → "1min"
+ *
+ * Exported for unit testing — keeps the time-formatting logic isolated
+ * from the timezone arithmetic.
+ */
+export function formatTimeLeft(minutesLeft: number): string {
+  // Defensive — getDispatchStatus only calls this when hour < cutoffHour
+  // so minutesLeft is always positive, but a caller-error shouldn't
+  // produce nonsense copy.
+  if (minutesLeft <= 0) return "0min";
+
+  if (minutesLeft < 60) {
+    return `${minutesLeft}min`;
+  }
+
+  const hours = Math.floor(minutesLeft / 60);
+  const mins = minutesLeft % 60;
+
+  if (mins === 0) {
+    return `${hours}h`;
+  }
+
+  return `${hours}h ${mins}min`;
 }

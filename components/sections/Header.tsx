@@ -66,7 +66,7 @@ export function Header() {
                 <Link
                   href="/"
                   aria-label="Enviro Aqua — Australian water filter specialists"
-                  className="inline-flex items-center"
+                  className="inline-flex items-center cursor-pointer"
                 >
                   <Logo />
                 </Link>
@@ -216,7 +216,7 @@ export function Header() {
 
 function Logo() {
   return (
-    <span className="inline-flex items-center">
+    <span className="inline-flex items-center cursor-pointer">
       <Image
         src="/logo.webp"
         alt="Enviro Aqua"
