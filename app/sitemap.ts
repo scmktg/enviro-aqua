@@ -73,6 +73,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
     },
     {
+      url: `${BASE}/water-filters-central-coast`,
+      lastModified: now,
+      priority: 0.8,
+      changeFrequency: "monthly",
+    },
+    {
       url: `${BASE}/contact`,
       lastModified: now,
       priority: 0.7,

@@ -65,17 +65,7 @@ export function productJsonLd(product: Product): string {
 export function breadcrumbJsonLd(
   trail: { label: string; url: string }[]
 ): string {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: trail.map((t, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: t.label,
-      item: siteUrl(t.url),
-    })),
-  };
-  return safeJson(data);
+  return safeJson({ "@context": "https://schema.org", ...breadcrumbData(trail) });
 }
 
 /**
@@ -89,11 +79,12 @@ export function breadcrumbJsonLd(
  * areaServed (Central Coast + extended catchment), telephone, ABN as
  * `taxID`, and `sameAs` for social profiles when added.
  */
-export function localBusinessJsonLd(): string {
-  const data = {
-    "@context": "https://schema.org",
+export const LOCAL_BUSINESS_ID = `${SITE_URL}#localbusiness`;
+
+function localBusinessData() {
+  return {
     "@type": ["LocalBusiness", "Store"],
-    "@id": `${SITE_URL}#localbusiness`,
+    "@id": LOCAL_BUSINESS_ID,
     name: SITE_NAME,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
@@ -152,7 +143,53 @@ export function localBusinessJsonLd(): string {
     currenciesAccepted: "AUD",
     sameAs: [],
   };
-  return safeJson(data);
+}
+
+function breadcrumbData(trail: { label: string; url: string }[]) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.label,
+      item: siteUrl(t.url),
+    })),
+  };
+}
+
+function faqData(faq: { q: string; a: string }[]) {
+  return {
+    "@type": "FAQPage",
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export function localBusinessJsonLd(): string {
+  return safeJson({ "@context": "https://schema.org", ...localBusinessData() });
+}
+
+/**
+ * Combined JSON-LD for a local SEO hub page. Emits a single `@graph`
+ * containing the canonical LocalBusiness entity (referenced by `@id` so
+ * Google merges with other emissions of the same business), the page's
+ * breadcrumbs, and the page's FAQ. One script tag per page.
+ */
+export function localHubJsonLd(input: {
+  trail: { label: string; url: string }[];
+  faq: { q: string; a: string }[];
+}): string {
+  return safeJson({
+    "@context": "https://schema.org",
+    "@graph": [
+      localBusinessData(),
+      breadcrumbData(input.trail),
+      faqData(input.faq),
+    ],
+  });
 }
 
 /**

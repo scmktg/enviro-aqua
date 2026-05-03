@@ -212,7 +212,15 @@ export default function ShowroomPage() {
           Entrance corridors are within 20 minutes of the showroom. We also
           serve customers driving up from Sydney, down from Newcastle, and
           across the Hunter region. For everyone outside the Central Coast,
-          we ship Australia-wide via standard or express courier.
+          we ship Australia-wide via standard or express courier. See our
+          full hub for{" "}
+          <Link
+            href="/water-filters-central-coast"
+            className="text-brand hover:text-brand-700 underline underline-offset-4"
+          >
+            water filters Central Coast
+          </Link>{" "}
+          — by suburb, supply type and install option.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
