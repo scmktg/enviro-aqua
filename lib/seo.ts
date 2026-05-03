@@ -97,7 +97,7 @@ export function localBusinessJsonLd(): string {
     name: SITE_NAME,
     legalName: BUSINESS.legalName,
     url: SITE_URL,
-    logo: siteUrl("/logo.svg"),
+    logo: siteUrl("/logo.webp"),
     image: siteUrl("/opengraph-image"),
     description:
       "Australian water filter specialists, based in Wyong on the NSW Central Coast. Whole-house, under-sink, bench-top and reverse osmosis water filters, plus WaterMark-certified commercial drinking bubblers. Click & collect from Wyong, Australia-wide shipping.",
@@ -192,7 +192,7 @@ export function articleJsonLd(input: {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: siteUrl("/logo.svg") },
+      logo: { "@type": "ImageObject", url: siteUrl("/logo.webp") },
     },
     datePublished: input.datePublished,
     dateModified: input.dateModified,
