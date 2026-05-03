@@ -14,6 +14,21 @@ export function siteUrl(path = ""): string {
   return `${SITE_URL}${path}`;
 }
 
+// Escapes characters that could break out of a <script> block when the
+// JSON is interpolated via dangerouslySetInnerHTML.
+const JSON_ESCAPES: Record<string, string> = {
+  "<": "\\u003c",
+  ">": "\\u003e",
+  "&": "\\u0026",
+  "\u2028": "\\u2028",
+  "\u2029": "\\u2029",
+};
+const JSON_ESCAPE_RE = new RegExp("[<>&\\u2028\\u2029]", "g");
+
+function safeJson(value: unknown): string {
+  return JSON.stringify(value).replace(JSON_ESCAPE_RE, (c) => JSON_ESCAPES[c]!);
+}
+
 /**
  * Product schema.org JSON-LD. Keeps Google happy on PDPs and unlocks
  * rich-result eligibility (price, availability, rating).
@@ -44,7 +59,7 @@ export function productJsonLd(product: Product): string {
       },
     },
   };
-  return JSON.stringify(data);
+  return safeJson(data);
 }
 
 export function breadcrumbJsonLd(
@@ -60,7 +75,7 @@ export function breadcrumbJsonLd(
       item: siteUrl(t.url),
     })),
   };
-  return JSON.stringify(data);
+  return safeJson(data);
 }
 
 /**
@@ -137,7 +152,7 @@ export function localBusinessJsonLd(): string {
     currenciesAccepted: "AUD",
     sameAs: [],
   };
-  return JSON.stringify(data);
+  return safeJson(data);
 }
 
 /**
@@ -189,5 +204,5 @@ export function articleJsonLd(input: {
       "@id": input.url,
     },
   };
-  return JSON.stringify(data);
+  return safeJson(data);
 }
