@@ -19,12 +19,19 @@ import Image from "next/image";
  * content and lets the mega menu open seamlessly on the same surface.
  *
  * Layout: 3-column CSS grid — logo (left), centred nav (middle), action
- * cluster (right). The middle column collapses to the hamburger button
- * below the `xl` breakpoint (1280px). 1280px is the threshold below which
- * the right cluster (search + phone + cart ≈ 250px) makes a centred 4-item
- * nav crowd against the logo; we use the hamburger pattern at all narrower
- * widths including iPad-landscape (1024px), where centred desktop nav
- * would create asymmetric whitespace.
+ * cluster (right). The middle column collapses to a hamburger button
+ * below the `xl` breakpoint (1280px). The hamburger lives at the END of
+ * the right cluster (after the cart) — keeps the action zone in one
+ * grouped corner rather than splitting nav-trigger and toolbar across
+ * two sides of the header.
+ *
+ * Search icon hides below `xl` because the mobile menu has its own inline
+ * search field (and the search overlay is one tap away from there).
+ *
+ * 1280px is the threshold below which the right cluster (≈250px) makes a
+ * centred 4-item nav crowd against the logo; we use the hamburger pattern
+ * at all narrower widths including iPad-landscape (1024px), where centred
+ * desktop nav would create asymmetric whitespace.
  */
 export function Header() {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
@@ -69,32 +76,14 @@ export function Header() {
         <header className="bg-paper text-ink border-b border-line">
           <div className="relative">
             <div className="container-site h-[64px] grid grid-cols-[auto_1fr_auto] items-center gap-6">
-              {/* Left: hamburger (mobile/tablet) + logo */}
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(true)}
-                  aria-label="Open menu"
-                  aria-expanded={mobileMenuOpen}
-                  className="xl:hidden h-10 w-10 -ml-2 inline-flex items-center justify-center text-ink hover:text-brand transition-colors duration-fast"
-                >
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
-                    <path
-                      d="M3 5h14M3 10h14M3 15h14"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-                <Link
-                  href="/"
-                  aria-label="Enviro Aqua — Australian water filter specialists"
-                  className="inline-flex items-center cursor-pointer"
-                >
-                  <Logo />
-                </Link>
-              </div>
+              {/* Left: logo */}
+              <Link
+                href="/"
+                aria-label="Enviro Aqua — Australian water filter specialists"
+                className="inline-flex items-center cursor-pointer"
+              >
+                <Logo />
+              </Link>
 
               {/* Centre: nav (xl+ only). Centred via grid `1fr` + flex `justify-center`. */}
               <nav
@@ -140,13 +129,13 @@ export function Header() {
                 </Link>
               </nav>
 
-              {/* Right: search + phone + cart */}
+              {/* Right: search (xl+ only) + phone + cart + hamburger (below xl) */}
               <div className="flex items-center gap-1 justify-self-end">
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
                   aria-label="Search products"
-                  className="h-10 w-10 inline-flex items-center justify-center text-ink hover:text-brand transition-colors duration-fast"
+                  className="hidden xl:inline-flex h-10 w-10 items-center justify-center text-ink hover:text-brand transition-colors duration-fast"
                 >
                   <svg
                     viewBox="0 0 20 20"
@@ -214,6 +203,22 @@ export function Header() {
                       {itemCount}
                     </span>
                   )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(true)}
+                  aria-label="Open menu"
+                  aria-expanded={mobileMenuOpen}
+                  className="xl:hidden h-10 w-10 -mr-2 inline-flex items-center justify-center text-ink hover:text-brand transition-colors duration-fast"
+                >
+                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+                    <path
+                      d="M3 5h14M3 10h14M3 15h14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </button>
               </div>
             </div>
