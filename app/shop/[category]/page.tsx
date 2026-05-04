@@ -6,8 +6,10 @@ import {
   summariseFacets,
   filterProducts,
   sortProducts,
+  mergeProductStates,
   type SortKey,
 } from "@/lib/catalogue";
+import { getProductStates } from "@/lib/shopify/product-state";
 import { getCategory, CATEGORIES } from "@/lib/categories";
 import { FilterRail } from "@/components/sections/FilterRail";
 import { ActiveFilters } from "@/components/sections/ActiveFilters";
@@ -72,7 +74,11 @@ export default async function CategoryPage({
   const category = getCategory(c);
   if (!category) notFound();
 
-  const all = getProductsByCategory(category.slug);
+  const hardcoded = getProductsByCategory(category.slug);
+  // Merge live Shopify price/stock BEFORE filter/sort so price-sort respects
+  // live prices and stock filters operate on real availability.
+  const states = await getProductStates(hardcoded.map((p) => p.slug));
+  const all = mergeProductStates(hardcoded, states);
   const facets = summariseFacets(all);
   const active = buildActiveFacets(sp);
   const filtered = filterProducts(all, active);
