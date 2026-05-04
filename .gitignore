@@ -8,4 +8,7 @@ out
 .vercel
 next-env.d.ts
 
+# TypeScript incremental build cache — machine-specific, not source.
+tsconfig.tsbuildinfo
+
 # Hardcoded local Shopify credentials — never commit
