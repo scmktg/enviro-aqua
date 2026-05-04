@@ -5,16 +5,17 @@ import { getProductBySlug } from "@/lib/catalogue";
 /**
  * Four buying paths reframed by NEED, not by property type.
  *
- * Three of the four routes (under-sink, bench-top, reverse-osmosis) now land
- * on the same PLP — `under-sink-ro-systems` — because the new catalogue
- * merged those sub-categories. The cards still represent four distinct
- * buyer-need framings; they just share a destination URL. Hero images are
- * pinned to specific product handles to keep each card visually distinct.
+ * The four routes land on three distinct PLPs in the 3-tier structure:
+ * whole-house and reverse-osmosis are their own pages; under-sink and
+ * bench-top share the under-sink PLP (the catalogue keeps bench-top as a
+ * hero handle but they live under the same under-sink sub-category for
+ * routing). Hero images are pinned to specific product handles to keep
+ * each card visually distinct.
  *
- *   1. Every tap        → whole-house-filters PLP
- *   2. One tap, plumbed → under-sink-ro-systems PLP (under-sink hero)
- *   3. One tap, no install → under-sink-ro-systems PLP (bench-top hero)
- *   4. Highest grade    → under-sink-ro-systems PLP (RO hero)
+ *   1. Every tap        → whole-house PLP
+ *   2. One tap, plumbed → under-sink PLP
+ *   3. One tap, no install → bench-top PLP
+ *   4. Highest grade    → reverse-osmosis PLP
  */
 const PATHS = [
   {
@@ -24,7 +25,7 @@ const PATHS = [
     body: "From the kitchen sink to the laundry, the showers and the garden tap. One filter at the mains line treats every drop in the house. The choice for owners on town water who don't want filtered water gated to one outlet.",
     bestFor: "Showers, washing machines, kettle, every tap",
     heroHandle: "premium-three-stage-big-blue-whole-house-water-filter-system",
-    href: "/shop/water-filters/whole-house-filters",
+    href: "/shop/water-filters/whole-house",
     feature: "Most popular for families",
   },
   {
@@ -34,7 +35,7 @@ const PATHS = [
     body: "Filter housing hidden in the cupboard, dedicated tap on the bench (or routed through a 3-way mixer). Bottled-quality water on demand. No countertop clutter. Suits owners and renters with landlord approval.",
     bestFor: "Kitchen drinking water without bench clutter",
     heroHandle: "under-sink-water-filter-2-stage-sediment-carbon",
-    href: "/shop/water-filters/under-sink-ro-systems",
+    href: "/shop/water-filters/under-sink",
     feature: "Cleanest install",
   },
   {
@@ -44,7 +45,7 @@ const PATHS = [
     body: "Connects to your existing kitchen tap with a simple diverter — no plumber, no holes, no landlord conversation. Uninstalls cleanly when you move. Same filtration media as the plumbed-in range.",
     bestFor: "Renters, holiday homes, quick installs",
     heroHandle: "bench-top-water-filter-sediment-carbon-2-stage",
-    href: "/shop/water-filters/under-sink-ro-systems",
+    href: "/shop/water-filters/bench-top",
     feature: "Renter friendly",
   },
   {
@@ -54,7 +55,7 @@ const PATHS = [
     body: "The only residential technology that meaningfully reduces fluoride, PFAS, lead, nitrate and total dissolved solids. Plumbs in under the sink alongside (or instead of) a standard filter. The right call when carbon block isn't enough.",
     bestFor: "Fluoride · PFAS · TDS · Bore water",
     heroHandle: "under-sink-water-filter-6-stage-reverse-osmosis-system",
-    href: "/shop/water-filters/under-sink-ro-systems",
+    href: "/shop/water-filters/reverse-osmosis",
     feature: "Most reduction",
   },
 ];

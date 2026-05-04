@@ -56,7 +56,7 @@ export function HomeHero() {
               Shop water filters
             </ButtonLink>
             <ButtonLink
-              href="/shop/drinking-bubblers"
+              href="/shop/bubblers-and-coolers"
               size="lg"
               variant="ghost"
             >

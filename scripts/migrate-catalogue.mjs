@@ -37,33 +37,30 @@ const VALID_CERTIFICATIONS = new Set([
 // Human-readable names for each category slug — used to build the
 // `categoryPath` breadcrumb on each Product record.
 const CATEGORY_TITLES = {
-  // Top-level
+  // Top-level (3-tier structure)
   "water-filters": "Water Filters",
-  "drinking-bubblers": "Drinking Bubblers",
-  "water-pumps": "Water Pumps",
-  "chemical-dosing-tanks": "Chemical Dosing Tanks",
-  bathroom: "Bathroom & Kitchen",
+  "bubblers-and-coolers": "Bubblers & Coolers",
+  more: "Bathroom, Kitchen & Specialty",
 
   // water-filters/
-  "whole-house-filters": "Whole House Filters",
-  "under-sink-ro-systems": "Under Sink & RO Systems",
+  "whole-house": "Whole House",
+  "under-sink": "Under Sink",
+  "reverse-osmosis": "Reverse Osmosis",
+  "bench-top": "Bench Top",
   "uv-sterilisers": "UV Sterilisers",
   "shower-filters": "Shower Filters",
   "replacement-cartridges": "Replacement Cartridges",
   "filter-taps": "Filter Taps",
-  "filter-fittings": "Filter Fittings",
+  "filter-pumps": "Filter Pumps",
+  "filter-tanks": "Filter Tanks",
 
-  // drinking-bubblers/
+  // bubblers-and-coolers/
   "commercial-bubblers": "Commercial Bubblers",
   "water-coolers": "Water Coolers",
-  "bubbler-parts": "Bubbler Parts",
+  "taps-and-cartridges": "Taps & Cartridges",
 
-  // water-pumps/
-  "12v-caravan-pumps": "12V Caravan Pumps",
-  "booster-pumps": "Booster Pumps",
-  "pressure-tanks": "Pressure Tanks",
-
-  // bathroom/
+  // more/
+  "dosing-tanks": "Dosing Tanks",
   toilets: "Toilets",
   "bathroom-taps": "Bathroom Taps",
   "kitchen-taps": "Kitchen Taps",
@@ -72,22 +69,121 @@ const CATEGORY_TITLES = {
   "bathroom-accessories": "Bathroom Accessories",
 };
 
-// SKU prefix per top-level — produces SKUs like EA-WF-4135.
-// Note: deriving from main_collection means the renamed `commercial-bubblers`
-// → `drinking-bubblers` migration changes the bubbler SKUs from EA-CB-* (old
-// fixture) to EA-DB-* (this catalogue). All 191 products in products.json
-// have sku=null, so this is a clean re-keying — no preserved SKUs to honour.
+// SKU prefix per NEW top-level — produces SKUs like EA-WF-4135.
+// All 191 products in products.json have sku=null, so this is a clean
+// re-keying — no preserved SKUs to honour. The previous migration used
+// EA-{WF|DB|WP|CT|BA}-* for 5 top-levels; this restructure absorbs water-pumps
+// into water-filters and merges drinking-bubblers/chemical-dosing-tanks/bathroom
+// into the 3-tier scheme. Re-running the script regenerates SKUs against the
+// new hierarchy: bubbler SKUs go from EA-DB-* → EA-BC-*, dosing/bathroom go
+// EA-CT-*/EA-BA-* → EA-MR-*. Same clean-break logic as the previous step.
 const SKU_PREFIX = {
   "water-filters": "EA-WF",
-  "drinking-bubblers": "EA-DB",
-  "water-pumps": "EA-WP",
-  "chemical-dosing-tanks": "EA-CT",
-  bathroom: "EA-BA",
+  "bubblers-and-coolers": "EA-BC",
+  more: "EA-MR",
 };
 
-function deriveSku(mainCollection, wpId) {
-  const prefix = SKU_PREFIX[mainCollection] ?? "EA-XX";
+function deriveSku(primaryCategory, wpId) {
+  const prefix = SKU_PREFIX[primaryCategory] ?? "EA-XX";
   return `${prefix}-${wpId}`;
+}
+
+// --- Three-tier remapping rules (2026-05) -----------------------------------
+//
+// The new structure collapses the previous 5 top-levels into 3:
+//   water-filters         absorbs water-pumps + the under-sink-ro-systems split
+//   bubblers-and-coolers  renames drinking-bubblers; bubbler-parts → taps-and-cartridges
+//   more                  catch-all for chemical-dosing-tanks + bathroom
+//
+// Two rule-driven splits:
+//   1. water-filters/under-sink-ro-systems (12 products) splits 3 ways by title.
+//   2. water-filters/filter-fittings (33 products) is dissolved — products
+//      redistribute to replacement-cartridges or filter-tanks by title rules.
+//      The slug ceases to exist as a public category.
+//
+// Title rules use lowercase substring matching; ordering matters (more
+// specific rules first).
+
+const TANK_PHRASES = [
+  "pressure switch",
+  "pressure gauge",
+  "pressure regulator",
+  "pressure reducing",
+  "pressure limiting",
+  "ball valve",
+  "shut off",
+  "shut-off",
+  "diverter valve",
+  "flexible stainless",
+  " hose ",
+  "pvc hose",
+  "pipe tube",
+];
+
+function remapCategory(p) {
+  const main = p.main_collection;
+  const sub = p.sub_collection;
+  const title = String(p.title || "").toLowerCase();
+
+  // Split rule for under-sink-ro-systems (12 products → bench-top / RO / under-sink).
+  if (main === "water-filters" && sub === "under-sink-ro-systems") {
+    if (title.includes("bench top") || title.includes("benchtop")) {
+      return ["water-filters", "bench-top"];
+    }
+    if (
+      title.includes(" ro ") ||
+      title.includes("reverse osmosis") ||
+      title.includes("desalination")
+    ) {
+      return ["water-filters", "reverse-osmosis"];
+    }
+    return ["water-filters", "under-sink"];
+  }
+
+  // Redistribution rule for filter-fittings (33 products → cartridges or tanks).
+  if (main === "water-filters" && sub === "filter-fittings") {
+    if (title.includes("membrane") || title.includes(" ro wrench")) {
+      return ["water-filters", "replacement-cartridges"];
+    }
+    if (TANK_PHRASES.some((ph) => title.includes(ph))) {
+      return ["water-filters", "filter-tanks"];
+    }
+    // Genuine fittings (push-fit elbows, locking clips, TDS testers, etc.)
+    // land in replacement-cartridges via this fallback. Intentional per spec.
+    return ["water-filters", "replacement-cartridges"];
+  }
+
+  // Direct moves within water-filters: rename whole-house-filters → whole-house.
+  if (main === "water-filters") {
+    if (sub === "whole-house-filters") return ["water-filters", "whole-house"];
+    return ["water-filters", sub];
+  }
+
+  // water-pumps absorbs into water-filters as filter-pumps + filter-tanks.
+  if (main === "water-pumps") {
+    if (sub === "pressure-tanks") return ["water-filters", "filter-tanks"];
+    // 12v-caravan-pumps + booster-pumps → filter-pumps
+    return ["water-filters", "filter-pumps"];
+  }
+
+  // drinking-bubblers → bubblers-and-coolers (rename); bubbler-parts → taps-and-cartridges.
+  if (main === "drinking-bubblers") {
+    if (sub === "bubbler-parts") return ["bubblers-and-coolers", "taps-and-cartridges"];
+    return ["bubblers-and-coolers", sub];
+  }
+
+  // chemical-dosing-tanks (1 product, no sub-cat) → more/dosing-tanks.
+  if (main === "chemical-dosing-tanks") {
+    return ["more", "dosing-tanks"];
+  }
+
+  // bathroom → more (preserves all sub-category slugs).
+  if (main === "bathroom") {
+    return ["more", sub];
+  }
+
+  // Unknown source — caller will error if this happens.
+  return [null, null];
 }
 
 function priceBand(price) {
@@ -205,12 +301,12 @@ function dedupe(arr) {
 }
 
 function mapProduct(p) {
-  // Resolve sub-category: prefer explicit sub_collection, else first non-main
-  // collection, else fall back to main_collection (single-product flat cats).
-  const subCategory =
-    p.sub_collection ||
-    (p.collections ?? []).find((c) => c !== p.main_collection) ||
-    p.main_collection;
+  const [primaryCategory, subCategory] = remapCategory(p);
+  if (!primaryCategory) {
+    throw new Error(
+      `Unmapped product: ${p.handle} (main=${p.main_collection}, sub=${p.sub_collection})`
+    );
+  }
 
   const regularPrice = (p.price && p.price.regular) || 0;
   const salePrice = (p.price && p.price.sale) || null;
@@ -224,12 +320,12 @@ function mapProduct(p) {
 
   return {
     id: String(p.old_wp_id),
-    sku: p.sku || deriveSku(p.main_collection, p.old_wp_id),
+    sku: p.sku || deriveSku(primaryCategory, p.old_wp_id),
     slug: p.handle,
     title: p.title,
-    primaryCategory: p.main_collection,
+    primaryCategory,
     subCategory,
-    categoryPath: deriveCategoryPath(p.main_collection, subCategory),
+    categoryPath: deriveCategoryPath(primaryCategory, subCategory),
     price: displayPrice,
     regularPrice,
     onSale,
@@ -384,14 +480,63 @@ ${mapped.map(emitProduct).join("\n")}
   console.log(`  Missing price:   ${noPrice.length}  (marked out_of_stock)`);
   console.log(`  Missing certs:   ${noCerts.length}`);
 
-  // Summary by main category for the PR description.
-  const byPrimary = mapped.reduce((acc, p) => {
-    acc[p.primaryCategory] = (acc[p.primaryCategory] ?? 0) + 1;
-    return acc;
-  }, {});
-  console.log("\nProducts by primary category:");
-  for (const [cat, n] of Object.entries(byPrimary).sort()) {
-    console.log(`  ${cat}: ${n}`);
+  // Distribution table — printed in canonical render order so the output
+  // is greppable against the spec's "expected outcome" block.
+  const RENDER_ORDER = [
+    ["water-filters", "whole-house"],
+    ["water-filters", "under-sink"],
+    ["water-filters", "reverse-osmosis"],
+    ["water-filters", "bench-top"],
+    ["water-filters", "uv-sterilisers"],
+    ["water-filters", "shower-filters"],
+    ["water-filters", "replacement-cartridges"],
+    ["water-filters", "filter-taps"],
+    ["water-filters", "filter-pumps"],
+    ["water-filters", "filter-tanks"],
+    ["bubblers-and-coolers", "commercial-bubblers"],
+    ["bubblers-and-coolers", "water-coolers"],
+    ["bubblers-and-coolers", "taps-and-cartridges"],
+    ["more", "dosing-tanks"],
+    ["more", "toilets"],
+    ["more", "bathroom-taps"],
+    ["more", "kitchen-taps"],
+    ["more", "vanities-and-basins"],
+    ["more", "showers-and-fixtures"],
+    ["more", "bathroom-accessories"],
+  ];
+  const counts = new Map();
+  for (const p of mapped) {
+    const key = `${p.primaryCategory}/${p.subCategory}`;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+
+  console.log("\nDistribution by (primaryCategory / subCategory):");
+  let runningTotal = 0;
+  let lastTop = "";
+  for (const [main, sub] of RENDER_ORDER) {
+    if (main !== lastTop) {
+      console.log(`  ${main}/`);
+      lastTop = main;
+    }
+    const n = counts.get(`${main}/${sub}`) ?? 0;
+    runningTotal += n;
+    const flag = n === 0 ? "  <-- EMPTY" : "";
+    console.log(`    ${sub.padEnd(24)} ${String(n).padStart(3)}${flag}`);
+  }
+  console.log(`  ─────────────────────────────`);
+  console.log(`  Total: ${runningTotal}`);
+
+  if (runningTotal !== mapped.length) {
+    throw new Error(
+      `Distribution total ${runningTotal} ≠ products ${mapped.length}. A product landed outside the canonical render order — fix remapCategory.`
+    );
+  }
+  for (const [main, sub] of RENDER_ORDER) {
+    if ((counts.get(`${main}/${sub}`) ?? 0) === 0) {
+      throw new Error(
+        `Sub-category "${main}/${sub}" has zero products. Either the rule is missing a case or the slug is wrong.`
+      );
+    }
   }
 }
 
