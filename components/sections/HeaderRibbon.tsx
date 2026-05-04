@@ -12,8 +12,9 @@ import { BUSINESS } from "@/lib/business";
  * seam) to make the animation seamless.
  *
  * The leftmost slot ("Same price retail or trade") is the brand thesis
- * and is also rendered statically alongside the rotation on desktop —
- * we don't rotate it away on wide screens because it's the differentiator.
+ * and is rendered statically alongside the rotation on viewports `md`
+ * and wider. Below `md`, only the rotating message shows (centred) —
+ * the static thesis text doesn't fit alongside it on a 380px viewport.
  */
 const ROTATING_MESSAGES: { label: string; href: string }[] = [
   {

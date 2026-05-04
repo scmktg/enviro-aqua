@@ -9,6 +9,7 @@ import { BUSINESS } from "@/lib/business";
 import { MegaMenu } from "./MegaMenu";
 import { HeaderRibbon } from "./HeaderRibbon";
 import { SearchOverlay } from "./SearchOverlay";
+import { MobileMenu } from "./MobileMenu";
 import Image from "next/image";
 
 /**
@@ -17,12 +18,18 @@ import Image from "next/image";
  * the nav itself uses ink-on-paper so it reads cleaner against page
  * content and lets the mega menu open seamlessly on the same surface.
  *
- * Both ribbon and nav stick together — the user always has access to
- * the brand pitch and the cart.
+ * Layout: 3-column CSS grid — logo (left), centred nav (middle), action
+ * cluster (right). The middle column collapses to the hamburger button
+ * below the `xl` breakpoint (1280px). 1280px is the threshold below which
+ * the right cluster (search + phone + cart ≈ 250px) makes a centred 4-item
+ * nav crowd against the logo; we use the hamburger pattern at all narrower
+ * widths including iPad-landscape (1024px), where centred desktop nav
+ * would create asymmetric whitespace.
  */
 export function Header() {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const itemCount = useCartItemCount();
   const openCart = useCart((s) => s.open);
@@ -61,8 +68,25 @@ export function Header() {
         <HeaderRibbon />
         <header className="bg-paper text-ink border-b border-line">
           <div className="relative">
-            <div className="container-site h-[64px] flex items-center justify-between gap-6">
-              <div className="flex items-center gap-10">
+            <div className="container-site h-[64px] grid grid-cols-[auto_1fr_auto] items-center gap-6">
+              {/* Left: hamburger (mobile/tablet) + logo */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(true)}
+                  aria-label="Open menu"
+                  aria-expanded={mobileMenuOpen}
+                  className="xl:hidden h-10 w-10 -ml-2 inline-flex items-center justify-center text-ink hover:text-brand transition-colors duration-fast"
+                >
+                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+                    <path
+                      d="M3 5h14M3 10h14M3 15h14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
                 <Link
                   href="/"
                   aria-label="Enviro Aqua — Australian water filter specialists"
@@ -70,52 +94,54 @@ export function Header() {
                 >
                   <Logo />
                 </Link>
-                <nav aria-label="Primary" className="hidden lg:block">
-                  <ul className="flex items-center gap-7">
-                    {CATEGORIES.map((cat) => (
-                      <li
-                        key={cat.slug}
-                        onMouseEnter={() => {
-                          cancelClose();
-                          setOpenCategory(cat.slug);
-                        }}
-                        onMouseLeave={scheduleClose}
-                      >
-                        <Link
-                          href={`/shop/${cat.slug}`}
-                          className="text-sm font-medium text-ink hover:text-brand transition-colors duration-fast inline-flex items-center gap-1.5 py-3"
-                          aria-expanded={openCategory === cat.slug}
-                        >
-                          {cat.navLabel}
-                          <svg
-                            aria-hidden
-                            viewBox="0 0 12 8"
-                            className="w-3 h-2"
-                            fill="none"
-                          >
-                            <path
-                              d="M1 1.5l5 5 5-5"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </Link>
-                      </li>
-                    ))}
-                    <li>
-                      <Link
-                        href="/blog"
-                        className="text-sm font-medium text-ink hover:text-brand transition-colors duration-fast"
-                      >
-                        Blog
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
               </div>
 
-              <div className="flex items-center gap-1">
+              {/* Centre: nav (xl+ only). Centred via grid `1fr` + flex `justify-center`. */}
+              <nav
+                aria-label="Primary"
+                className="hidden xl:flex items-center justify-center gap-7"
+              >
+                {CATEGORIES.map((cat) => (
+                  <div
+                    key={cat.slug}
+                    onMouseEnter={() => {
+                      cancelClose();
+                      setOpenCategory(cat.slug);
+                    }}
+                    onMouseLeave={scheduleClose}
+                  >
+                    <Link
+                      href={`/shop/${cat.slug}`}
+                      className="text-sm font-medium text-ink hover:text-brand transition-colors duration-fast inline-flex items-center gap-1.5 py-3"
+                      aria-expanded={openCategory === cat.slug}
+                    >
+                      {cat.navLabel}
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 12 8"
+                        className="w-3 h-2"
+                        fill="none"
+                      >
+                        <path
+                          d="M1 1.5l5 5 5-5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+                ))}
+                <Link
+                  href="/blog"
+                  className="text-sm font-medium text-ink hover:text-brand transition-colors duration-fast"
+                >
+                  Blog
+                </Link>
+              </nav>
+
+              {/* Right: search + phone + cart */}
+              <div className="flex items-center gap-1 justify-self-end">
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
@@ -209,6 +235,12 @@ export function Header() {
       <SearchOverlay
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
+      />
+      <MobileMenu
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        onOpenSearch={() => setSearchOpen(true)}
+        onOpenCart={openCart}
       />
     </>
   );
