@@ -9,8 +9,9 @@ export type StockStatus = "in_stock" | "out_of_stock" | "low_stock";
 
 export type PrimaryCategory =
   | "water-filters"
-  | "commercial-bubblers"
-  | "kitchen-taps"
+  | "drinking-bubblers"
+  | "water-pumps"
+  | "chemical-dosing-tanks"
   | "bathroom";
 
 /**

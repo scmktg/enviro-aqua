@@ -13,12 +13,12 @@ interface SearchOverlayProps {
 }
 
 const POPULAR_QUERIES = [
-  { label: "Whole house filter", href: "/shop/water-filters/whole-house" },
-  { label: "Bench top filter", href: "/shop/water-filters/bench-top" },
-  { label: "Reverse osmosis", href: "/shop/water-filters/reverse-osmosis" },
+  { label: "Whole house filter", href: "/shop/water-filters/whole-house-filters" },
+  { label: "Under sink & RO", href: "/shop/water-filters/under-sink-ro-systems" },
+  { label: "UV steriliser", href: "/shop/water-filters/uv-sterilisers" },
   {
     label: "Bubblers for schools",
-    href: "/shop/commercial-bubblers/filtered-bubblers",
+    href: "/shop/drinking-bubblers/commercial-bubblers",
   },
   {
     label: "Replacement cartridges",

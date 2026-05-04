@@ -14,9 +14,9 @@ import { ButtonLink } from "@/components/ui/Button";
  * fit-out spec sheets, multi-site quoting) than a retail shopper.
  */
 const FEATURED_BUBBLERS = [
-  "commercial-filtered-water-bubbler-square-stainless-steel-watermark-certified",
-  "commercial-filtered-cold-water-bubbler-round-stainless-steel-watermark-certified",
-  "commercial-rust-free-filtered-cold-water-bubbler-watermark-certified",
+  "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des",
+  "commercial-stainless-steel-filtered-cold-water-bubbler-round-wm",
+  "commercial-rust-free-filtered-cold-water-bubbler-wm",
 ];
 
 export async function HomeBubblerSpotlight() {
@@ -60,7 +60,7 @@ export async function HomeBubblerSpotlight() {
         {bubblers.map((bubbler) => (
           <li key={bubbler.id}>
             <Link
-              href="/commercial-bubblers"
+              href="/drinking-bubblers"
               className="group block h-full bg-paper border border-line hover:border-ink rounded-sm overflow-hidden transition-colors duration-fast"
             >
               <article className="h-full flex flex-col">
@@ -114,7 +114,7 @@ export async function HomeBubblerSpotlight() {
       </ul>
 
       <div className="mt-10 flex flex-col sm:flex-row gap-3">
-        <ButtonLink href="/commercial-bubblers">
+        <ButtonLink href="/drinking-bubblers">
           View commercial bubbler range
         </ButtonLink>
         <ButtonLink href="/contact" variant="ghost">

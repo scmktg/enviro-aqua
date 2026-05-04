@@ -28,7 +28,7 @@ import { INSTALL_PACKAGE } from "@/lib/install-package";
  */
 export function HomeHero() {
   const featured = getProductBySlug(
-    "triple-big-blue-whole-house-water-filter-20-x-4-5-3-stage"
+    "premium-three-stage-big-blue-whole-house-water-filter-system"
   );
 
   return (
@@ -56,7 +56,7 @@ export function HomeHero() {
               Shop water filters
             </ButtonLink>
             <ButtonLink
-              href="/shop/commercial-bubblers"
+              href="/shop/drinking-bubblers"
               size="lg"
               variant="ghost"
             >

@@ -35,55 +35,68 @@ export function getProductsBySubCategory(
 }
 
 /**
- * Featured selection for the homepage. Hand-picked SKUs rather than a
- * sort-by-popularity heuristic — the homepage is a curated landing page,
- * not a top-sellers list.
+ * Featured selection for the homepage. Hand-picked HANDLES (not SKUs) so the
+ * curation survives SKU regeneration. The merchant edits product copy and
+ * specs in `products.json`; we re-run the migration script to refresh the
+ * fixture; handles are deterministic from titles, so they stay stable.
+ *
+ * Six featured products: the highest-impression hand-finished pieces across
+ * the catalogue, chosen for category coverage rather than absolute clicks.
  */
-const FEATURED_SKUS = [
-  "EA-WF-WH-016", // Triple Big Blue Whole House — flagship whole-house, $1,299.95
-  "EA-WF-RO-005", // 5-Stage RO Under Sink with 3-Way Tap — residential RO hero, $599.95
-  "EA-CB-BB-001", // Square WaterMark Bubbler — commercial flagship, $999.95
-  "EA-WF-US-001", // Under Sink 2-Stage — entry-level under-sink, $99.95
-  "EA-WF-BN-001", // Bench Top 2-Stage — rental-friendly hero, $69.95
-  "EA-CB-WC-001", // Hot/Cold Water Cooler — office hero, $499.95
+const FEATURED_HANDLES = [
+  "premium-three-stage-big-blue-whole-house-water-filter-system", // whole-house hero, hand-finished, 2,978 imp
+  "5-stage-undersink-home-drinking-ro-water-filter-system-with-3-way-tap", // residential RO hero, $599.95
+  "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des", // commercial flagship, $999.95
+  "under-sink-water-filter-2-stage-sediment-carbon", // entry-level under-sink, $99.95
+  "under-sink-water-filter-6-stage-reverse-osmosis-system", // hand-finished, 17,639 imp — top of GSC
+  "shower-filter-15-stages-includes-extra-cartridge", // hand-finished, 4,132 imp + 28 clicks
 ];
 
 export function getFeaturedProducts(): Product[] {
-  // Preserve order of FEATURED_SKUS so curation is intentional.
-  return FEATURED_SKUS
-    .map((sku) => PRODUCTS.find((p) => p.sku === sku))
+  // Preserve order of FEATURED_HANDLES so curation is intentional.
+  return FEATURED_HANDLES
+    .map((slug) => PRODUCTS.find((p) => p.slug === slug))
     .filter((p): p is Product => Boolean(p));
 }
 
 /**
  * Curated "most popular" picks per category, shown above the full PLP grid
  * on the category landing page. Hand-picked rather than computed because
- * (a) we don't have order data yet, and (b) on a 100-SKU catalogue the
+ * (a) we don't have order data yet, and (b) on a ~200-SKU catalogue the
  * editorial pick beats the long-tail-noise of analytics-driven sorting.
  *
- * When the order data is wired up post-launch, this can be swapped for a
- * Shopify Storefront query against best-sellers — the consumer signature
- * (Product[]) doesn't change.
+ * Keyed by HANDLE so the curation survives SKU regeneration. When order data
+ * is wired up post-launch, this can be swapped for a Shopify Storefront query
+ * against best-sellers — the consumer signature (Product[]) doesn't change.
  */
 const POPULAR_BY_CATEGORY: Record<string, string[]> = {
   "water-filters": [
-    "EA-WF-WH-016", // Triple Big Blue Whole House
-    "EA-WF-RO-005", // 5-Stage RO Under Sink with 3-Way Tap
-    "EA-WF-US-001", // Under Sink 2-Stage
-    "EA-WF-BN-001", // Bench Top 2-Stage
+    "premium-three-stage-big-blue-whole-house-water-filter-system",
+    "5-stage-undersink-home-drinking-ro-water-filter-system-with-3-way-tap",
+    "under-sink-water-filter-6-stage-reverse-osmosis-system",
+    "shower-filter-15-stages-includes-extra-cartridge",
   ],
-  "commercial-bubblers": [
-    "EA-CB-BB-001",
-    "EA-CB-WC-001",
+  "drinking-bubblers": [
+    "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des",
+    "filtered-hot-cold-water-cooler-direct-connect",
   ],
-  "kitchen-taps": [],
-  bathroom: [],
+  "water-pumps": [
+    "ro-water-filter-24v-dc-diaphragm-pump-reverse-osmosis-pressure-booster-pump",
+    "single-phase-submersible-clean-water-pump-370w-lift-10m",
+  ],
+  "chemical-dosing-tanks": [
+    "chemical-dosing-tank-with-bunding-available-in-50l-100l-and-200l",
+  ],
+  bathroom: [
+    "toilet-rimless-modern-watermark-ceramic-p-trap-commode-modern-2piece-toilet-wels",
+    "115mm-square-tile-insert-100mm-waste-outlet-floor-drain-shower-grate",
+  ],
 };
 
 export function getPopularForCategory(categorySlug: string): Product[] {
-  const skus = POPULAR_BY_CATEGORY[categorySlug] ?? [];
-  return skus
-    .map((sku) => PRODUCTS.find((p) => p.sku === sku))
+  const slugs = POPULAR_BY_CATEGORY[categorySlug] ?? [];
+  return slugs
+    .map((slug) => PRODUCTS.find((p) => p.slug === slug))
     .filter((p): p is Product => Boolean(p));
 }
 
@@ -99,12 +112,16 @@ export function getPopularForCategory(categorySlug: string): Product[] {
  */
 export function getCrossSell(product: Product): Product[] {
   const COMPLEMENTARY: Record<string, string[]> = {
-    "reverse-osmosis": ["dedicated-ro-taps", "ro-3way-taps", "replacement-cartridges"],
-    "whole-house": ["uv-sterilisation", "replacement-cartridges", "fittings-parts"],
-    "under-sink": ["dedicated-ro-taps", "replacement-cartridges"],
-    "bench-top": ["replacement-cartridges", "fittings-parts"],
-    "filtered-bubblers": ["bubbler-parts"],
+    "whole-house-filters": ["uv-sterilisers", "replacement-cartridges", "filter-fittings"],
+    "under-sink-ro-systems": ["filter-taps", "replacement-cartridges"],
+    "uv-sterilisers": ["whole-house-filters", "replacement-cartridges"],
+    "shower-filters": ["replacement-cartridges"],
+    "filter-taps": ["under-sink-ro-systems", "filter-fittings"],
+    "filter-fittings": ["replacement-cartridges"],
+    "commercial-bubblers": ["bubbler-parts"],
     "water-coolers": ["bubbler-parts"],
+    "booster-pumps": ["pressure-tanks", "filter-fittings"],
+    "pressure-tanks": ["booster-pumps", "filter-fittings"],
   };
 
   const targets = COMPLEMENTARY[product.subCategory] ?? [];

@@ -16,25 +16,25 @@ const ANSWERS = [
   {
     question: "I want filtered water at every tap",
     route: "Whole house filter",
-    href: "/shop/water-filters/whole-house",
+    href: "/shop/water-filters/whole-house-filters",
     note: "Big Blue stack at the mains line",
   },
   {
     question: "Just drinking water — clean install, hidden",
     route: "Under sink filter",
-    href: "/shop/water-filters/under-sink",
+    href: "/shop/water-filters/under-sink-ro-systems",
     note: "With a dedicated tap or 3-way mixer",
   },
   {
     question: "Just drinking water — no plumber, no install",
     route: "Bench top filter",
-    href: "/shop/water-filters/bench-top",
+    href: "/shop/water-filters/under-sink-ro-systems",
     note: "Connects to your existing tap",
   },
   {
     question: "I'm worried about fluoride, PFAS or dissolved solids",
     route: "Reverse osmosis",
-    href: "/shop/water-filters/reverse-osmosis",
+    href: "/shop/water-filters/under-sink-ro-systems",
     note: "The only system that meaningfully reduces them",
   },
 ];
