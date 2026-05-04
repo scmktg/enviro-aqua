@@ -10,8 +10,8 @@
  * lib/shopify/product-state.ts — this fixture is the fallback when
  * Shopify is unavailable.
  *
- * Generated: 2026-05-04T05:07:55.222Z
- * Products:  191
+ * Generated: 2026-05-04T05:53:51.608Z
+ * Products:  187
  */
 
 import type { Product } from "@/types/product";
@@ -23,8 +23,8 @@ export const PRODUCTS: Product[] = [
     slug: "water-filter-fitting-joiner-quick-connect-38-enviro-aqua",
     title: "Water Filter Fitting Joiner Quick Connect 3/8\" . Enviro Aqua",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -57,8 +57,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "reverse-osmosis-ro-residential-14-drain-clamp",
     title: "Reverse Osmosis RO Residential 1/4\" Drain Clamp",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -125,8 +125,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "30-pics-14-locking-clips-clamps-for-reverse-osmosis-water-filter-fittings-6mm",
     title: "30 Pics 1/4\" Locking Clips Clamps for Reverse Osmosis Water Filter Fittings 6mm",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -158,8 +158,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "water-filter-fitting-tee-quick-connect-38-enviro-aqua",
     title: "Water Filter Fitting Tee Quick Connect 3/8\". Enviro Aqua",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -194,8 +194,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "diverter-valve-tap-connector-for-14-tube-benchtop-water-filters",
     title: "Diverter Valve Tap connector for 1/4\" tube Benchtop water filters",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 27.95,
     regularPrice: 27.95,
     onSale: false,
@@ -262,8 +262,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "digital-ph-meter-tds-tester-analysis-monitor-for-aquarium-pool-r1bo",
     title: "Digital PH Meter + TDS Tester Analysis Monitor for Aquarium Pool R1BO",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 144.95,
     regularPrice: 144.95,
     onSale: false,
@@ -296,8 +296,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "2x-home-plastic-3-way-water-purifier-filters-tube-quick-connect-fitting-white",
     title: "2X Home Plastic 3-Way Water Purifier Filters Tube Quick Connect Fitting White",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -331,8 +331,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "digital-meter-tds-tester-aquarium-pool-spa-hydroponic-water-monitor-da",
     title: "Digital Meter TDS Tester Aquarium Pool SPA Hydroponic Water Monitor DA",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 24.95,
     regularPrice: 24.95,
     onSale: false,
@@ -366,8 +366,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "14-push-fit-pipe-fitting-elbow-tube-connector-joiner-water-filter-fridge-ro",
     title: "1/4\" Push Fit Pipe Fitting Elbow Tube Connector Joiner Water Filter Fridge RO",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 17.95,
     regularPrice: 17.95,
     onSale: false,
@@ -400,8 +400,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "ro-wrench-for-water-filter-wrenching-1812-housing-of-reverse-osmosis-membrane",
     title: "RO Wrench for Water Filter wrenching 1812 Housing of Reverse Osmosis Membrane",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -434,8 +434,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "inline-shutoff-ball-valve-push-fit-quick-connect-14",
     title: "Inline Shutoff Ball Valve | Push Fit Quick Connect | 1/4\"",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 7.95,
     regularPrice: 7.95,
     onSale: false,
@@ -467,8 +467,8 @@ Versatile Application: Suitable for use in various systems, including reverse os
     slug: "water-pressure-reducing-valve-with-quick-connect-fitting-14-6mm-tube",
     title: "Water Pressure Reducing Valve with Quick Connect Fitting 1/4\" (6mm) tube",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 24.95,
     regularPrice: 24.95,
     onSale: false,
@@ -534,8 +534,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "plastic-opening-handle-spanner-wrench-for-10x25water-filter-housing-universal",
     title: "Plastic Opening Handle Spanner Wrench For 10\"x2.5”Water Filter Housing Universal",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 12.95,
     regularPrice: 12.95,
     onSale: false,
@@ -568,8 +568,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "5-x-fridge-water-filter-fitting-threaded-elbow-quick-connect-6mm-x-14-push-fit",
     title: "5 x Fridge Water Filter Fitting Threaded Elbow Quick Connect 6mm x 1/4\" Push Fit",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -605,8 +605,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "tap-thread-adaptor-suitable-for-countertop-systems-22mm-to-24mm",
     title: "Tap Thread Adaptor Suitable for Countertop Systems 22mm to 24mm",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -660,8 +660,8 @@ Suitable for virtually all benchtop water filter systems with a 24mm female dive
     slug: "diverter-valve-tap-connector-for-14-tube-benchtop-countertop-water-filters",
     title: "Diverter Valve Tap connector for 1/4\" tube Benchtop Countertop water filters",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 22.99,
     regularPrice: 22.99,
     onSale: false,
@@ -693,8 +693,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "5-x-14-push-fit-pipe-fitting-elbow-tube-connector-joiner-water-filter-fridge",
     title: "5 x 1/4\" Push Fit Pipe Fitting Elbow Tube Connector Joiner Water Filter Fridge",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -762,8 +762,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "tank-ball-valve-push-fit-quick-connect-14",
     title: "Tank Ball Valve | Push Fit Quick Connect | 1/4\"",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 7.95,
     regularPrice: 7.95,
     onSale: false,
@@ -797,8 +797,8 @@ Versatile Application: Suitable for use in various systems, including reverse os
     slug: "2-x-water-filter-fitting-tee-quick-connect-14-tee-6mm-fridge-enviro-aqua",
     title: "2 x Water Filter Fitting Tee Quick Connect 1/4' TEE 6mm Fridge. Enviro Aqua",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -833,8 +833,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "diverter-valve-tap-rubber-connector-adapter-to-fit-benchtop-to-old-taps",
     title: "Diverter Valve Tap Rubber Connector /Adapter To Fit Benchtop To Old Taps",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -866,8 +866,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "5-x-water-filter-fitting-joiner-quick-connect-14-6mm-fridge-enviro-aqua",
     title: "5 x Water Filter Fitting Joiner Quick Connect 1/4' 6mm Fridge. Enviro Aqua",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -1060,8 +1060,8 @@ Quick Connect Hose Fittings – Simplifies tubing connections`,
     slug: "water-and-air-pressure-oil-gauge-new-14-brass-bspt-thread-60-150-300-psi",
     title: "Water and Air Pressure Oil Gauge New 1/4\" Brass BSPT Thread 60 / 150 / 300 PSI",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 29.95,
     regularPrice: 29.95,
     onSale: false,
@@ -1275,8 +1275,8 @@ Instruction Manual for quick, hassle-free setup`,
     slug: "water-filter-tube-high-pressure-nsf-pipe-14-6mm-lldpe",
     title: "Water Filter Tube | High Pressure NSF Pipe | 1/4\" 6mm| LLDPE",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 0,
     regularPrice: 0,
     onSale: false,
@@ -1396,8 +1396,8 @@ Installation must be carried out by a licensed plumber. Allow approximately 1-2 
     slug: "30-pics-38-locking-clips-clamps-for-reverse-osmosis-water-filter-fittings",
     title: "30 Pics 3/8\" Locking Clips Clamps for Reverse Osmosis Water Filter Fittings",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 14.95,
     regularPrice: 14.95,
     onSale: false,
@@ -1498,8 +1498,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "standard-10-x-25-water-filter-standard-water-filter-housing-white-universal",
     title: "Standard 10\" x 2.5\" water filter Standard Water Filter Housing White | Universal",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 29.95,
     regularPrice: 29.95,
     onSale: false,
@@ -1547,8 +1547,8 @@ Reverse Osmosis`,
     slug: "reusable-100-micron-strainer-water-filter-washable-filter-sediment-10x25",
     title: "Reusable 100 micron Strainer Water Filter Washable Filter Sediment 10\"x2.5\"",
     primaryCategory: "water-filters",
-    subCategory: "whole-house",
-    categoryPath: ["Water Filters", "Whole House"],
+    subCategory: "replacement-cartridges",
+    categoryPath: ["Water Filters", "Replacement Cartridges"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -1615,8 +1615,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "24v-high-pressure-switch-for-pump-ro-water-fitlers-with-quick-connect",
     title: "24V high Pressure Switch for Pump RO Water Fitlers with Quick Connect",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -1650,8 +1650,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "3-way-ro-system-water-shut-off-stop-valve-14x-14-quick-connect-x-12",
     title: "3-Way RO System Water Shut Off Stop Valve 1/4”x 1/4 Quick connect x 1/2\"",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -1686,8 +1686,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "24v-low-pressure-switch-for-pump-ro-water-fitlers-with-quick-connect",
     title: "24V Low Pressure Switch For Pump RO Water Fitlers With Quick Connect",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 19.95,
     regularPrice: 19.95,
     onSale: false,
@@ -2709,8 +2709,8 @@ Boats and Marine Systems: Protects onboard water systems, enhances taste and rem
     slug: "5-stage-undersink-home-drinking-ro-water-filter-system-with-3-way-tap",
     title: "5 Stage Undersink Home Drinking RO Water Filter System With 3 Way Tap",
     primaryCategory: "water-filters",
-    subCategory: "filter-taps",
-    categoryPath: ["Water Filters", "Filter Taps"],
+    subCategory: "reverse-osmosis",
+    categoryPath: ["Water Filters", "Reverse Osmosis"],
     price: 599.95,
     regularPrice: 599.95,
     onSale: false,
@@ -2741,8 +2741,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "5-stages-ro-system-stainless-steel-tap",
     title: "5 Stages RO System , Stainless Steel Tap",
     primaryCategory: "water-filters",
-    subCategory: "filter-taps",
-    categoryPath: ["Water Filters", "Filter Taps"],
+    subCategory: "reverse-osmosis",
+    categoryPath: ["Water Filters", "Reverse Osmosis"],
     price: 349.95,
     regularPrice: 349.95,
     onSale: false,
@@ -2870,8 +2870,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "id-8mm-5m-plastic-clear-pvc-hose-pipe-tube-air-water-food-home-washer",
     title: "ID 8mm 5M Plastic Clear PVC Hose Pipe Tube Air Water Food Home Washer",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 24.95,
     regularPrice: 24.95,
     onSale: false,
@@ -2895,159 +2895,6 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     kitHint: null,
     seoTitle: "ID 8mm 5M Plastic Clear PVC Hose Pipe Tube | Enviro Aqua",
     seoDescription: "Quality plumbing fitting for water filtration systems, reverse osmosis installations, and standard 1/4\" tubing.",
-  },
-  {
-    id: "4119",
-    sku: "EA-WF-4119",
-    slug: "dc12v-280w-submersible-solar-power-water-well-pump-garden-farm-ranch-23ft-lift",
-    title: "DC12V 280W Submersible Solar Power Water Well Pump Garden Farm Ranch 23FT Lift",
-    primaryCategory: "water-filters",
-    subCategory: "filter-pumps",
-    categoryPath: ["Water Filters", "Filter Pumps"],
-    price: 59.95,
-    regularPrice: 59.95,
-    onSale: false,
-    stockStatus: "in_stock",
-    shortDescription: "Compact, self-priming water pump designed for caravans, RVs, boats, and off-grid applications. Key specifications: 12V operation, 280W power draw, up to 1,500 L/h flow rate, 7.0m maximum head lift.…",
-    longDescription: `Compact, self-priming water pump designed for caravans, RVs, boats, and off-grid applications. Key specifications: 12V operation, 280W power draw, up to 1,500 L/h flow rate, 7.0m maximum head lift. Backed by Enviro Aqua's local Australian support and Sydney warehouse for fast dispatch.
-
-Water pumps are essential for any water system that needs reliable pressure or flow — whether you're moving water from a tank to a tap, boosting pressure for a reverse osmosis filter, or recirculating hot water through a heating system. Enviro Aqua sources pumps engineered for Australian conditions, with weather-tolerant housings, food-grade wetted components where applicable, and consistent quality control.
-
-Most pumps require basic plumbing connections (inlet and outlet) and an appropriate power supply. Submersible pumps require waterproof power connection and care to avoid running dry. Booster pumps for RO applications connect inline between the cold water supply and the RO system inlet. Refer to product documentation or contact us for specific installation guidance.
-
-## Why buy from Enviro Aqua
-
-Enviro Aqua is an Australian-owned water filtration specialist based on the NSW Central Coast. We supply residential, commercial, and industrial water treatment products across Australia — with local warehousing for fast dispatch, Australian-standards-compliant products, and direct support from our team if you need help choosing the right system. Where applicable, our products carry WaterMark and WELS certification for full compliance with Australian plumbing standards. Free shipping on orders over $99 within Australia.`,
-    facets: {
-      "flow_rate": "1500 LPH",
-      "price_band": "$30 – $100",
-    },
-    images: [
-      "https://enviroaqua.com.au/wp-content/uploads/2022/03/DC.jpg",
-    ],
-    tags: [],
-    certifications: [],
-    kitHint: null,
-    seoTitle: "DC12V 280W Submersible Solar Power Water Well | Enviro Aqua",
-    seoDescription: "Compact, self-priming water pump designed for caravans, RVs, boats, and off-grid applications.",
-  },
-  {
-    id: "4121",
-    sku: "EA-WF-4121",
-    slug: "3-speed-hot-water-circulator-boiler-pump-switch-heating-sys-1-male15-female",
-    title: "3 Speed Hot Water Circulator Boiler Pump Switch Heating Sys 1\" male/1.5\" female",
-    primaryCategory: "water-filters",
-    subCategory: "filter-pumps",
-    categoryPath: ["Water Filters", "Filter Pumps"],
-    price: 59.95,
-    regularPrice: 59.95,
-    onSale: false,
-    stockStatus: "in_stock",
-    shortDescription: "Three-speed hot water circulator pump for hydronic heating systems and recirculating hot water installations. Key specifications: 240V operation, 100W power draw, up to 3,600 L/h flow rate, 6.0m…",
-    longDescription: `Three-speed hot water circulator pump for hydronic heating systems and recirculating hot water installations. Key specifications: 240V operation, 100W power draw, up to 3,600 L/h flow rate, 6.0m maximum head lift. Backed by Enviro Aqua's local Australian support and Sydney warehouse for fast dispatch.
-
-Water pumps are essential for any water system that needs reliable pressure or flow — whether you're moving water from a tank to a tap, boosting pressure for a reverse osmosis filter, or recirculating hot water through a heating system. Enviro Aqua sources pumps engineered for Australian conditions, with weather-tolerant housings, food-grade wetted components where applicable, and consistent quality control.
-
-Most pumps require basic plumbing connections (inlet and outlet) and an appropriate power supply. Submersible pumps require waterproof power connection and care to avoid running dry. Booster pumps for RO applications connect inline between the cold water supply and the RO system inlet. Refer to product documentation or contact us for specific installation guidance.
-
-## Why buy from Enviro Aqua
-
-Enviro Aqua is an Australian-owned water filtration specialist based on the NSW Central Coast. We supply residential, commercial, and industrial water treatment products across Australia — with local warehousing for fast dispatch, Australian-standards-compliant products, and direct support from our team if you need help choosing the right system. Where applicable, our products carry WaterMark and WELS certification for full compliance with Australian plumbing standards. Free shipping on orders over $99 within Australia.`,
-    facets: {
-      "flow_rate": "3600 LPH",
-      "price_band": "$30 – $100",
-    },
-    images: [
-      "https://enviroaqua.com.au/wp-content/uploads/2022/03/3-Speed-Pump.jpg",
-    ],
-    tags: [],
-    certifications: [],
-    kitHint: null,
-    seoTitle: "3 Speed Hot Water Circulator Boiler Pump | Enviro Aqua",
-    seoDescription: "Three-speed hot water circulator pump for hydronic heating systems and recirculating hot water installations.",
-  },
-  {
-    id: "4123",
-    sku: "EA-WF-4123",
-    slug: "single-phase-submersible-clean-water-pump-370w-lift-10m",
-    title: "Single-Phase Submersible Clean water Pump 370W lift 10m",
-    primaryCategory: "water-filters",
-    subCategory: "filter-pumps",
-    categoryPath: ["Water Filters", "Filter Pumps"],
-    price: 69.95,
-    regularPrice: 69.95,
-    onSale: false,
-    stockStatus: "in_stock",
-    shortDescription: "Heavy-duty 370W single-phase submersible water pump for clean water applications — moving water from wells, tanks, sumps, and underground sources where above-ground pumping isn't an option. 1HP…",
-    longDescription: `## When you need a submersible
-
-Submersible pumps go where above-ground pumps can't:
-
-- **Bore wells** — pumping water out of an underground well
-- **Storage tanks** — drawing water from the bottom of a tank for distribution
-- **Sumps and pits** — clearing water from below-ground areas
-- **Garden irrigation** — drawing from rainwater tanks or natural sources
-- **Pool top-ups and water transfer** — moving water between containers
-
-Because they sit submerged in the water source, they don't need priming, can handle vertical lifts that would be physically impossible with above-ground pumps, and operate quietly (the water cools and silences the motor).
-
-## Specifications
-
-- **Power:** 370W (1HP equivalent)
-- **Voltage:** 240V single-phase mains
-- **Maximum head lift:** 10 metres
-- **Maximum flow rate:** 2 m³/h (2,000 L/h)
-- **Maximum operating temperature:** 60°C
-- **Minimum operating temperature:** 0°C
-- **Cable length:** 1 metre
-- **Weight:** 4.95 kg
-- **Dimensions:** 17cm wide × 34cm tall
-- **Power source:** Electric (240V)
-- **Suitable for:** Clean water and water treatment applications
-
-## Working condition limits
-
-- **Maximum submersion depth:** 5 metres from the impeller centre
-- **Maximum medium temperature:** 40°C
-- **Suitable pH range:** 4-10
-- **Maximum kinematic viscosity:** 7×10⁻⁷ to 23×10⁻⁶ m²/s
-- **Maximum medium density:** 1.2×10³ kg/m³
-
-## What it's NOT for
-
-This is a **clean water pump** — not designed for sewage, slurry, or high-particulate water. The impeller will clog and the motor seal can fail. For waste water or sediment-heavy water, use a dedicated sump or sewage pump instead.
-
-## Installation requirements
-
-**Critical:** The pump must always operate fully submerged — running it dry will destroy the motor seal in seconds. Most installations include a low-water cut-off switch to prevent dry-running.
-
-Electrical connection requires a waterproof junction at the cable termination — a licensed electrician should make this connection, particularly for outdoor or well-pump installations. Do not extend the supplied cable; if you need a longer run, use a properly-rated submersible pump cable joiner.
-
-## Suitable applications
-
-- Domestic well pumping (residential bore systems)
-- Rainwater tank distribution
-- Sump pump-out (clean water only)
-- Garden irrigation from tank or natural source
-- Pool top-up and emergency drainage
-- Transfer between water storage tanks
-
-## Australian electrical standards
-
-240V mains operation suitable for Australian household electrical systems. Permanent installation should comply with AS/NZS 3000 wiring standards — engage a licensed electrician for permanent connections.`,
-    facets: {
-      "flow_rate": "2000 LPH",
-      "price_band": "$30 – $100",
-    },
-    images: [
-      "https://enviroaqua.com.au/wp-content/uploads/2022/03/Sewag1.jpg",
-      "https://enviroaqua.com.au/wp-content/uploads/2022/03/Sewag3.jpg",
-    ],
-    tags: [],
-    certifications: [],
-    kitHint: null,
-    seoTitle: "1HP Submersible Water Pump, 10m Lift | Enviro Aqua",
-    seoDescription: "240V single-phase submersible pump. 370W (1HP), 10m max head, 2,000 L/h. For wells, tanks, sumps & clean water transfer.",
   },
   {
     id: "4127",
@@ -3614,8 +3461,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "50psi-pressure-limiting-protection-dual-check-valve-quick-connect-water-filter-r",
     title: "50Psi Pressure Limiting Protection Dual Check Valve - Quick Connect Water Filter Regulation in 3/8\" or 1'4\"",
     primaryCategory: "water-filters",
-    subCategory: "filter-tanks",
-    categoryPath: ["Water Filters", "Filter Tanks"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 0,
     regularPrice: 0,
     onSale: false,
@@ -3638,8 +3485,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "smart-led-bathroom-mirror-oval",
     title: "Smart LED Bathroom Mirror - Oval",
     primaryCategory: "more",
-    subCategory: "vanities-and-basins",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Vanities & Basins"],
+    subCategory: "bathroom-accessories",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
     price: 0,
     regularPrice: 0,
     onSale: false,
@@ -3669,8 +3516,8 @@ Enviro Aqua is an Australian-owned water filtration specialist based on the NSW 
     slug: "smart-led-bathroom-mirror-circle",
     title: "Smart LED Bathroom Mirror - Circle",
     primaryCategory: "more",
-    subCategory: "vanities-and-basins",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Vanities & Basins"],
+    subCategory: "bathroom-accessories",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
     price: 99.95,
     regularPrice: 99.95,
     onSale: false,
@@ -4749,70 +4596,6 @@ Save more by buying in bulk! Our GAC filters are available at significant discou
     kitHint: null,
     seoTitle: "Granular Activated Carbon Water Filter | Enviro Aqua",
     seoDescription: "Improve water quality with this 10\" granular activated carbon (GAC) filter, designed to reduce chlorine, odors, volatile organic compounds (VOCs), and unpl",
-  },
-  {
-    id: "5165",
-    sku: "EA-WF-5165",
-    slug: "aquarium-fish-tank-carbon-activated-carbon-filter-500g-1kg-2kg-3kg-5kg-25kg",
-    title: "Aquarium Fish Tank Carbon - Activated Carbon Filter - 500g, 1KG, 2KG, 3KG, 5KG, 25KG",
-    primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
-    price: 0,
-    regularPrice: 0,
-    onSale: false,
-    stockStatus: "out_of_stock",
-    shortDescription: "Premium loose-fill activated carbon for aquarium and pond filtration. Removes tannins, odours, organic discolouration, and dissolved chemical residues while leaving beneficial trace minerals intact.…",
-    longDescription: `## Why loose carbon, not pads or cartridges
-
-Most aquarium filters accept loose activated carbon in a media bag — this is the format used by serious aquarists and aquaculture operators because it gives you control over the exact volume in your filter, lets you replace it on your own schedule (not the manufacturer's cartridge cycle), and works out far cheaper per litre filtered than pre-packaged pads.
-
-## What it removes
-
-- **Tannins** from driftwood that turn water yellow-brown over time
-- **Organic discolouration** in established tanks where waste builds up
-- **Odours** from decomposing plant matter or fish waste
-- **Dissolved chemical residues** from medications after a treatment course
-- **Chlorine and chloramines** in tap-water top-ups
-- **Residual taste/smell** in koi ponds and water gardens
-
-It does **not** remove ammonia, nitrites, or nitrates (those need biological filtration) and shouldn't be used during medication treatments — it'll strip the medication out before it has a chance to work.
-
-## Suitable for
-
-- **Freshwater tanks:** All species, planted tanks, biotopes
-- **Marine tanks:** Reef, FOWLR, quarantine systems
-- **Ponds:** Koi ponds, water features, garden ponds
-- **Aquaculture:** Commercial growing systems
-- **Hydroponic systems:** Where chemical residue control matters
-
-## Pack sizes & pricing
-
-| Size | Price | Per kg |
-|---|---|---|
-| 500g | $14.95 | $29.90 |
-| 1 kg | $19.95 | $19.95 |
-| 2 kg | $28.95 | $14.48 |
-| 3 kg | $34.95 | $11.65 |
-| 5 kg | $54.95 | $10.99 |
-| 25 kg | $249.95 | $9.99 |
-
-For most home aquarium setups (under 200L), a 500g or 1kg pack will last a year or more. Pond keepers and commercial operations typically buy the 5kg or 25kg.
-
-## How long does it last?
-
-Activated carbon's lifespan depends on bioload, water volume, and filter flow rate. As a rough guide, replace aquarium carbon every 4-6 weeks for active filtration, longer if you're using it as a polishing stage on already-clean water. Pond carbon typically lasts a season.`,
-    facets: {
-      "technology": ["Coconut shell activated carbon (loose granular)"],
-    },
-    images: [
-      "https://enviroaqua.com.au/wp-content/uploads/2024/10/Activated_Fish_Tank_Carbon.png",
-    ],
-    tags: [],
-    certifications: [],
-    kitHint: null,
-    seoTitle: "Aquarium & Pond Activated Carbon (500g–25kg) | Enviro Aqua",
-    seoDescription: "Premium loose activated carbon for aquariums, ponds, marine tanks. Removes tannins, odours, discolouration. Bulk pricing from $9.99/kg.",
   },
   {
     id: "5181",
@@ -5975,8 +5758,8 @@ We stock all replacement cartridges and offer set bundles for the annual change-
     slug: "water-filter-tube-high-pressure-nsf-pipe-38-lldpe",
     title: "Water Filter Tube | High Pressure NSF Pipe | 3/8\" | LLDPE",
     primaryCategory: "water-filters",
-    subCategory: "replacement-cartridges",
-    categoryPath: ["Water Filters", "Replacement Cartridges"],
+    subCategory: "filter-fittings",
+    categoryPath: ["Water Filters", "Filter Fittings"],
     price: 0,
     regularPrice: 0,
     onSale: false,
@@ -6761,8 +6544,8 @@ This product is WELS-rated (4-star) and WaterMark-certified, meeting Australian 
     slug: "complete-bathroom-package-1b-matte-black-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 1B | Matte Black | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 999.99,
     regularPrice: 999.99,
     onSale: false,
@@ -6819,8 +6602,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-1g-brushed-gold-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 1G | Brushed Gold | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1199.99,
     regularPrice: 1199.99,
     onSale: false,
@@ -6877,8 +6660,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-2g-brushed-gold-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 2G | Brushed Gold | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1799.99,
     regularPrice: 1799.99,
     onSale: false,
@@ -6937,8 +6720,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-2b-matte-black-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 2B | Matte Black | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1599.99,
     regularPrice: 1599.99,
     onSale: false,
@@ -6997,8 +6780,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-4b-matte-black-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 4B | Matte Black | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 2099.99,
     regularPrice: 2099.99,
     onSale: false,
@@ -7057,8 +6840,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-4g-brushed-gold-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 4G | Brushed Gold | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 2299.99,
     regularPrice: 2299.99,
     onSale: false,
@@ -7117,8 +6900,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-3b-matte-black-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 3B | Matte Black | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1699.99,
     regularPrice: 1699.99,
     onSale: false,
@@ -7177,8 +6960,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-3g-brushed-gold-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 3G | Brushed Gold | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1899.99,
     regularPrice: 1899.99,
     onSale: false,
@@ -7237,8 +7020,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-2c-polished-chrome-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 2C | Polished Chrome | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1599.99,
     regularPrice: 1599.99,
     onSale: false,
@@ -7297,8 +7080,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-4c-polished-chrome-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 4C | Polished Chrome | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 2099.99,
     regularPrice: 2099.99,
     onSale: false,
@@ -7357,8 +7140,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-3c-polished-chrome-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 3C | Polished Chrome | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 1699.99,
     regularPrice: 1699.99,
     onSale: false,
@@ -7417,8 +7200,8 @@ Please note the hand shower is not WELS rated, only the overhead.
     slug: "complete-bathroom-package-1c-polished-chrome-watermark-certified-wels-rated",
     title: "Complete Bathroom Package 1C | Polished Chrome | Watermark Certified | WELS Rated",
     primaryCategory: "more",
-    subCategory: "bathroom-accessories",
-    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Accessories"],
+    subCategory: "bathroom-packages",
+    categoryPath: ["Bathroom, Kitchen & Specialty", "Bathroom Packages"],
     price: 999.99,
     regularPrice: 999.99,
     onSale: false,

@@ -176,6 +176,9 @@ const nextConfig = {
       },
 
       // === Within water-filters: previous-migration slugs that no longer exist ===
+      // Note: filter-fittings was briefly redirected to replacement-cartridges
+      // (when the slug was dissolved); the slug is back as a real category in
+      // the catalogue-fixes restructure, so no redirect — let the page render.
       {
         source: "/shop/water-filters/whole-house-filters",
         destination: "/shop/water-filters/whole-house",
@@ -184,11 +187,6 @@ const nextConfig = {
       {
         source: "/shop/water-filters/under-sink-ro-systems",
         destination: "/shop/water-filters/under-sink",
-        permanent: true,
-      },
-      {
-        source: "/shop/water-filters/filter-fittings",
-        destination: "/shop/water-filters/replacement-cartridges",
         permanent: true,
       },
 
@@ -200,7 +198,7 @@ const nextConfig = {
       },
       {
         source: "/shop/water-filters/fittings-parts",
-        destination: "/shop/water-filters/replacement-cartridges",
+        destination: "/shop/water-filters/filter-fittings",
         permanent: true,
       },
       {

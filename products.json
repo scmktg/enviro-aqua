@@ -2288,7 +2288,8 @@
         "description_source": "rewritten",
         "long_description_chars": 1690,
         "unusually_long_description": false,
-        "hand_finished": false
+        "hand_finished": false,
+        "duplicate_consolidation_needed": true
       }
     },
     {
@@ -4015,7 +4016,8 @@
         "description_source": "rewritten",
         "long_description_chars": 1690,
         "unusually_long_description": false,
-        "hand_finished": false
+        "hand_finished": false,
+        "duplicate_consolidation_needed": true
       }
     },
     {

@@ -90,9 +90,18 @@ export const CATEGORIES: Category[] = [
         name: "Replacement Cartridges",
         heading: "Replacement Filter Cartridges",
         intro:
-          "Genuine replacement cartridges for every Enviro Aqua system — and for any standard 10\" or 20\" Australian housing. Sediment, carbon block, granular activated carbon, RO membranes, ultrafiltration. Plus the push-fit fittings, locking clips, TDS testers and small parts you need at service time.",
+          "Genuine replacement cartridges for every Enviro Aqua system — and for any standard 10\" or 20\" Australian housing. Sediment, carbon block, granular activated carbon, RO membranes, ultrafiltration. Annual kits available.",
         decisionLine:
           "Your filter is over 6–12 months old — replace it before it starts releasing what it captured.",
+      },
+      {
+        slug: "filter-fittings",
+        name: "Filter Fittings",
+        heading: "Filter Fittings & Plumbing Accessories",
+        intro:
+          "Push-fit elbows, joiners, tees, drain clamps, locking clips, pressure switches, gauges, ball valves and water testers. The small parts every filter installation needs — sized for standard 1/4\" and 3/8\" tubing.",
+        decisionLine:
+          "You're servicing a system or building one out — the small parts that hold it together.",
       },
       {
         slug: "filter-taps",
@@ -228,6 +237,15 @@ export const CATEGORIES: Category[] = [
           "Freestanding vanities with stone and ceramic basin tops. Pre-drilled for standard tap configurations. Tap and drainage sold separately.",
         decisionLine:
           "Bathroom renovation — main vanity replacement.",
+      },
+      {
+        slug: "bathroom-packages",
+        name: "Bathroom Packages",
+        heading: "Complete Bathroom Packages",
+        intro:
+          "Coordinated bathroom suites — toilet, basin, mixer taps and accessories, all in matching finish. Watermark certified, WELS rated, ready for a single-supplier renovation.",
+        decisionLine:
+          "You want a coordinated bathroom suite from one supplier in one delivery.",
       },
       {
         slug: "showers-and-fixtures",
