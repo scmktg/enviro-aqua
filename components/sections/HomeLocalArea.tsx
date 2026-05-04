@@ -97,11 +97,18 @@ export function HomeLocalArea() {
               <p className="text-xs uppercase tracking-[0.16em] text-muted mb-3">
                 Walk-in &amp; Click &amp; Collect
               </p>
-              <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm text-ink/85">
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm text-ink/85 mb-5">
                 {NEARBY_SUBURBS.map((suburb) => (
                   <li key={suburb}>{suburb}</li>
                 ))}
               </ul>
+              <Link
+                href="/water-filters-central-coast"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-700 transition-colors duration-fast"
+              >
+                Water filters across the NSW Central Coast
+                <span aria-hidden>→</span>
+              </Link>
             </div>
             <div>
               <h3 className="text-sm font-semibold tracking-tight text-ink mb-3">
