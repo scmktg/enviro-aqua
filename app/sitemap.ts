@@ -11,18 +11,20 @@ const BASE =
  * priority as a relative-importance hint within a single sitemap, so
  * we use it to communicate intent, not absolute crawl rate.
  *
- *   water-filters       → 0.9   (primary specialty)
- *   commercial-bubblers → 0.8   (secondary specialty)
- *   kitchen-taps        → 0.6   (paired with filters)
- *   bathroom            → 0.4   (de-emphasised)
+ *   water-filters         → 0.9   (primary specialty)
+ *   drinking-bubblers     → 0.8   (secondary specialty)
+ *   water-pumps           → 0.6   (filtration support equipment)
+ *   chemical-dosing-tanks → 0.5   (niche commercial)
+ *   bathroom              → 0.4   (de-emphasised — fit-out support)
  *
  * Sub-categories inherit and step down by 0.1; products step down by
  * a further 0.1.
  */
 const CATEGORY_PRIORITY: Record<string, number> = {
   "water-filters": 0.9,
-  "commercial-bubblers": 0.8,
-  "kitchen-taps": 0.6,
+  "drinking-bubblers": 0.8,
+  "water-pumps": 0.6,
+  "chemical-dosing-tanks": 0.5,
   bathroom: 0.4,
 };
 
@@ -61,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
     },
     {
-      url: `${BASE}/commercial-bubblers`,
+      url: `${BASE}/drinking-bubblers`,
       lastModified: now,
       priority: 0.85,
       changeFrequency: "monthly",

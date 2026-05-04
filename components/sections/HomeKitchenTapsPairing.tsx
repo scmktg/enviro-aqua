@@ -7,31 +7,34 @@ import { getProductBySlug } from "@/lib/catalogue";
  * AFTER the bubbler section — kitchen taps are presented as the
  * accessory that completes a water filter install, not as a competing
  * category. This is deliberate for SEO: we want Google to associate
- * "kitchen tap" pages with filtration intent, not generic tapware.
+ * filter-tap pages with filtration intent, not generic tapware.
  *
- * Three product types lead the section, each linking through to its
- * sub-category. Visually it's a 3-up image strip — different rhythm
- * to the 2-up filter cards above so the page doesn't feel like one
- * grid pattern repeated.
+ * Filter-tap routes (3-way mixers, dedicated RO faucets) live under
+ * `water-filters/filter-taps`; standard kitchen mixers without filtration
+ * live under `bathroom/kitchen-taps`. The `href` per card points to the
+ * destination PLP; product hero is pinned by handle.
  */
 const TAP_TYPES = [
   {
     slug: "ro-3way-taps",
     label: "3-Way RO Mixers",
-    productSlug: "luxurious-3-way-ro-tap-matte-black-or-brushed-nickel",
+    productSlug: "3-way-pull-down-spray-tap-kitchen-mixer-in-black-chrome-and-nickel",
     blurb: "One tap, three streams: hot, cold and filtered RO.",
+    href: "/shop/water-filters/filter-taps",
   },
   {
     slug: "dedicated-ro-taps",
     label: "Dedicated RO Faucets",
-    productSlug: "premium-reverse-osmosis-drinking-water-faucet-nsf-certified",
+    productSlug: "premium-water-filter-faucet-tap-reverse-osmosis-drinking-ro-nsf",
     blurb: "A separate small-bore tap for filtered drinking water only.",
+    href: "/shop/water-filters/filter-taps",
   },
   {
     slug: "mixer-taps",
     label: "Kitchen Mixers",
-    productSlug: "modern-pull-down-kitchen-mixer-brushed-nickel",
+    productSlug: "spring-loaded-tap-kitchen-mixer-in-brushed-nickel",
     blurb: "Standard pull-out and gooseneck mixers, WELS rated.",
+    href: "/shop/bathroom/kitchen-taps",
   },
 ];
 
@@ -69,7 +72,7 @@ export function HomeKitchenTapsPairing() {
             return (
               <Link
                 key={tap.slug}
-                href={`/shop/kitchen-taps/${tap.slug}`}
+                href={tap.href}
                 className="group block bg-mist rounded-sm overflow-hidden border border-line hover:border-ink transition-colors duration-fast"
               >
                 <div className="relative aspect-[4/5]">

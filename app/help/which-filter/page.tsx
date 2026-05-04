@@ -15,19 +15,19 @@ const FLOW = [
     n: "01",
     q: "Do you rent, or do you own?",
     a: "If you rent, you almost always want a Bench Top filter — it sits on the kitchen bench, connects to your existing tap with a diverter, and uninstalls in five minutes when you move. No plumber, no landlord conversation. If you own, the right answer depends on whether you want filtered drinking water (Under Sink) or filtered water at every tap including showers and laundry (Whole House).",
-    cta: { label: "Bench Top Filters", href: "/shop/water-filters/bench-top" },
+    cta: { label: "Under Sink & Bench Top", href: "/shop/water-filters/under-sink-ro-systems" },
   },
   {
     n: "02",
     q: "Town water, tank water, or bore?",
     a: "Town water is chlorinated — a sediment + carbon stage covers it. Tank and bore water are not chlorinated, which means bacterial risk; you want UV sterilisation in the system. High-TDS, brackish or fluoride-heavy supplies need Reverse Osmosis to make a meaningful reduction.",
-    cta: { label: "UV Sterilisers", href: "/shop/water-filters/uv-sterilisation" },
+    cta: { label: "UV Sterilisers", href: "/shop/water-filters/uv-sterilisers" },
   },
   {
     n: "03",
     q: "What do you actually want filtered out?",
     a: "Chlorine, taste & odour, sediment: any sediment + carbon system handles these. Heavy metals, lead: carbon block. Fluoride, PFAS, total dissolved solids: only Reverse Osmosis reduces these to single-digit-percent levels. Bacteria, viruses, protozoa: UV. There's no single filter that does everything — but a 3-stage whole-house plus an under-sink RO covers about 99% of household concerns.",
-    cta: { label: "Reverse Osmosis Systems", href: "/shop/water-filters/reverse-osmosis" },
+    cta: { label: "Reverse Osmosis Systems", href: "/shop/water-filters/under-sink-ro-systems" },
   },
 ];
 

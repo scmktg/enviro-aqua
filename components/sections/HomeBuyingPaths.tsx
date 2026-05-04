@@ -1,24 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getProductsBySubCategory } from "@/lib/catalogue";
+import { getProductBySlug } from "@/lib/catalogue";
 
 /**
  * Four buying paths reframed by NEED, not by property type.
  *
- * The previous version asked "do you own or rent?" — a property
- * question that doesn't match how customers actually think. The new
- * framing matches the actual decision being made: where do you want
- * filtered water, and how clean does it need to be?
+ * Three of the four routes (under-sink, bench-top, reverse-osmosis) now land
+ * on the same PLP — `under-sink-ro-systems` — because the new catalogue
+ * merged those sub-categories. The cards still represent four distinct
+ * buyer-need framings; they just share a destination URL. Hero images are
+ * pinned to specific product handles to keep each card visually distinct.
  *
- *   1. Every tap        → whole house
- *   2. One tap, plumbed → under sink
- *   3. One tap, no install → bench top
- *   4. Highest grade    → reverse osmosis (different axis — technology)
- *
- * RO sits as the fourth option because it's where customers self-route
- * when they specifically want fluoride/PFAS reduction. We make it
- * explicit on the card that RO pairs with under-sink installation, so
- * the option doesn't look orphaned.
+ *   1. Every tap        → whole-house-filters PLP
+ *   2. One tap, plumbed → under-sink-ro-systems PLP (under-sink hero)
+ *   3. One tap, no install → under-sink-ro-systems PLP (bench-top hero)
+ *   4. Highest grade    → under-sink-ro-systems PLP (RO hero)
  */
 const PATHS = [
   {
@@ -27,8 +23,8 @@ const PATHS = [
     title: "Filtered water everywhere",
     body: "From the kitchen sink to the laundry, the showers and the garden tap. One filter at the mains line treats every drop in the house. The choice for owners on town water who don't want filtered water gated to one outlet.",
     bestFor: "Showers, washing machines, kettle, every tap",
-    productSubCategory: "whole-house",
-    href: "/shop/water-filters/whole-house",
+    heroHandle: "premium-three-stage-big-blue-whole-house-water-filter-system",
+    href: "/shop/water-filters/whole-house-filters",
     feature: "Most popular for families",
   },
   {
@@ -37,8 +33,8 @@ const PATHS = [
     title: "Drinking water at the kitchen — invisible install",
     body: "Filter housing hidden in the cupboard, dedicated tap on the bench (or routed through a 3-way mixer). Bottled-quality water on demand. No countertop clutter. Suits owners and renters with landlord approval.",
     bestFor: "Kitchen drinking water without bench clutter",
-    productSubCategory: "under-sink",
-    href: "/shop/water-filters/under-sink",
+    heroHandle: "under-sink-water-filter-2-stage-sediment-carbon",
+    href: "/shop/water-filters/under-sink-ro-systems",
     feature: "Cleanest install",
   },
   {
@@ -47,8 +43,8 @@ const PATHS = [
     title: "Filtered drinking water in five minutes",
     body: "Connects to your existing kitchen tap with a simple diverter — no plumber, no holes, no landlord conversation. Uninstalls cleanly when you move. Same filtration media as the plumbed-in range.",
     bestFor: "Renters, holiday homes, quick installs",
-    productSubCategory: "bench-top",
-    href: "/shop/water-filters/bench-top",
+    heroHandle: "bench-top-water-filter-sediment-carbon-2-stage",
+    href: "/shop/water-filters/under-sink-ro-systems",
     feature: "Renter friendly",
   },
   {
@@ -57,8 +53,8 @@ const PATHS = [
     title: "Reverse osmosis — fluoride, PFAS, dissolved solids",
     body: "The only residential technology that meaningfully reduces fluoride, PFAS, lead, nitrate and total dissolved solids. Plumbs in under the sink alongside (or instead of) a standard filter. The right call when carbon block isn't enough.",
     bestFor: "Fluoride · PFAS · TDS · Bore water",
-    productSubCategory: "reverse-osmosis",
-    href: "/shop/water-filters/reverse-osmosis",
+    heroHandle: "under-sink-water-filter-6-stage-reverse-osmosis-system",
+    href: "/shop/water-filters/under-sink-ro-systems",
     feature: "Most reduction",
   },
 ];
@@ -88,11 +84,7 @@ export function HomeBuyingPaths() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {PATHS.map((path) => {
-          const products = getProductsBySubCategory(
-            "water-filters",
-            path.productSubCategory
-          );
-          const hero = products[0];
+          const hero = getProductBySlug(path.heroHandle);
           return (
             <Link
               key={path.slug}

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
  *   2. BuyingPaths        — "Where do you want filtered water?" — needs-based
  *   3. FilterFinder       — One-question shortcut for fast routing
  *   4. FeaturedProducts   — Most-bought systems (social proof at price level)
- *   5. BubblerSpotlight   — Three certified commercial bubblers → /commercial-bubblers
+ *   5. BubblerSpotlight   — Three certified commercial bubblers → /drinking-bubblers
  *   6. KitchenTapsPairing — Taps as accessories to filtration
  *   7. Reviews            — Real Google/Facebook social proof
  *   8. LocalArea          — Central Coast SEO + NAP block

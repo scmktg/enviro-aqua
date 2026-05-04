@@ -86,8 +86,9 @@ VENDOR = "Enviro Aqua"
 # taxonomy "Product Category" which is validated against Shopify's tree.
 TYPE_BY_PRIMARY = {
     "water-filters": "Water Filter",
-    "commercial-bubblers": "Commercial Drinking Bubbler",
-    "kitchen-taps": "Kitchen Tap",
+    "drinking-bubblers": "Drinking Bubbler",
+    "water-pumps": "Water Pump",
+    "chemical-dosing-tanks": "Chemical Dosing Tank",
     "bathroom": "Bathroom Fixture",
 }
 
@@ -103,6 +104,20 @@ TYPE_BY_PRIMARY = {
 #   - Home & Garden > Kitchen & Dining > Kitchen Appliances > Water Filters > Countertop Water Filters
 #   - Home & Garden > Kitchen & Dining > Kitchen Appliances > Water Filters > Under-Sink Water Filters
 #   - Home & Garden > Kitchen & Dining > Kitchen Appliances > Water Coolers
+#
+# CATALOGUE-MIGRATION NOTE (2026-05):
+# After the 191-product migration the SKU scheme changed — products now use
+# `EA-{WF|DB|WP|CT|BA}-{wpId}`. The legacy entries below remain because the
+# Shopify Standard Product Taxonomy paths they encode are still valid
+# reference data, but they no longer match SKUs in the regenerated catalogue
+# (which uses WP-ID-based SKUs like EA-WF-4135). The script's `to_shopify_rows`
+# falls back to "" (blank) when a SKU has no entry, which is Shopify-safe —
+# the merchant fills these via Admin's type-ahead picker post-import.
+#
+# We are NOT inventing taxonomy paths for the new ~150 SKUs because Shopify's
+# tree has changed since the legacy mappings were written and guessing leaf
+# names produces invalid imports. The blank-and-fill flow takes a few minutes
+# in Admin and is the documented path.
 # ---------------------------------------------------------------------------
 PRODUCT_CATEGORY = {
     # Whole-house water filters: there's no whole-house-specific taxonomy
@@ -187,6 +202,19 @@ PRODUCT_CATEGORY = {
 # Why these matter: Shopify's tiered shipping rates are calculated from
 # weight (and dimensions) at checkout. A 0g default would drop every
 # product into the lowest tier and undercharge the customer for shipping.
+#
+# CATALOGUE-MIGRATION NOTE (2026-05):
+# After the 191-product migration the SKU scheme changed (now `EA-XX-{wpId}`).
+# The legacy entries below still encode real measured weights for those
+# product designs — keeping them as historical reference — but their SKU keys
+# no longer match the new catalogue. ~150 of the 191 new SKUs therefore have
+# no weight entry and will default to 0g, which Shopify will charge as the
+# lowest shipping tier.
+#
+# Weight not yet measured — defaults to 0g, update as products are weighed.
+# Do NOT guess weights for the new products: guessing silently undercharges
+# (or overcharges) shipping and is materially worse UX than the blank-defaulted
+# Shopify shipping tier the merchant can override per-order.
 # ---------------------------------------------------------------------------
 VARIANT_GRAMS = {
     # ---- Whole-house Big Blue systems ----

@@ -8,9 +8,9 @@ import { getProductBySlug } from "@/lib/catalogue";
 import { BUSINESS } from "@/lib/business";
 
 const BUBBLER_SLUGS = [
-  "commercial-filtered-water-bubbler-square-stainless-steel-watermark-certified",
-  "commercial-filtered-cold-water-bubbler-round-stainless-steel-watermark-certified",
-  "commercial-rust-free-filtered-cold-water-bubbler-watermark-certified",
+  "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des",
+  "commercial-stainless-steel-filtered-cold-water-bubbler-round-wm",
+  "commercial-rust-free-filtered-cold-water-bubbler-wm",
 ];
 
 export const metadata: Metadata = {
@@ -18,18 +18,18 @@ export const metadata: Metadata = {
     "WaterMark Certified Commercial Bubblers - Ready to Install | Enviro Aqua",
   description:
     "Three WaterMark-certified commercial drinking bubblers, ready to ship from Wyong NSW. Filters pre-installed, standard half-inch connection, your plumber installs in under an hour. For schools, gyms and offices.",
-  alternates: { canonical: "/commercial-bubblers" },
+  alternates: { canonical: "/drinking-bubblers" },
   openGraph: {
     title: "WaterMark Certified Commercial Bubblers - Ready to Install",
     description:
       "Pick a model, we ship same-day. Filters pre-installed, plumber connects to a standard half-inch inlet.",
-    url: "/commercial-bubblers",
+    url: "/drinking-bubblers",
     type: "website",
   },
 };
 
 const STYLE_DETAILS = {
-  "commercial-filtered-water-bubbler-square-stainless-steel-watermark-certified":
+  "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des":
     {
       style: "Square format",
       audience: "Schools, public spaces, councils",
@@ -37,15 +37,14 @@ const STYLE_DETAILS = {
         "The standard rectangular bubbler that fits cleanly against any wall.",
       keySpec: "Ambient water, wall-mount",
     },
-  "commercial-filtered-cold-water-bubbler-round-stainless-steel-watermark-certified":
-    {
-      style: "Round format, chilled",
-      audience: "Gyms, sports clubs, fitness centres",
-      hookline:
-        "Refrigerated cold water for high-traffic sites where ambient won't cut it.",
-      keySpec: "Cold water, integrated chiller",
-    },
-  "commercial-rust-free-filtered-cold-water-bubbler-watermark-certified": {
+  "commercial-stainless-steel-filtered-cold-water-bubbler-round-wm": {
+    style: "Round format, chilled",
+    audience: "Gyms, sports clubs, fitness centres",
+    hookline:
+      "Refrigerated cold water for high-traffic sites where ambient won't cut it.",
+    keySpec: "Cold water, integrated chiller",
+  },
+  "commercial-rust-free-filtered-cold-water-bubbler-wm": {
     style: "Marine grade, chilled",
     audience: "Outdoor sites, coastal, pool decks",
     hookline:
@@ -66,8 +65,8 @@ export default function CommercialBubblersPage() {
         trail={[
           { label: "Home", href: "/" },
           {
-            label: "Commercial Bubblers",
-            href: "/commercial-bubblers",
+            label: "Drinking Bubblers",
+            href: "/drinking-bubblers",
           },
         ]}
       />
