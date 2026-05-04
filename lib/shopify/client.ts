@@ -114,6 +114,9 @@ export interface ShopifyFetchOptions {
   cache?: RequestCache;
   /** Tags to revalidate via `revalidateTag()`. */
   tags?: string[];
+  /** Seconds before Next refetches in the background, or `false` to opt
+   *  out of time-based revalidation (tag-based revalidation still works). */
+  revalidate?: number | false;
   /** Buyer's IP if known — passed through to Shopify's Buyer-IP header
    *  for accurate bot/rate-limit handling on server-side requests. */
   buyerIp?: string;
@@ -161,7 +164,7 @@ export async function shopifyFetch<T>(
         variables: options.variables ?? {},
       }),
       cache: options.cache ?? "force-cache",
-      next: { tags: options.tags },
+      next: { tags: options.tags, revalidate: options.revalidate },
     }
   );
 

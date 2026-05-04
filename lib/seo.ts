@@ -49,9 +49,9 @@ export function productJsonLd(product: Product): string {
       price: product.price.toFixed(2),
       itemCondition: "https://schema.org/NewCondition",
       availability:
-        product.stockStatus === "in_stock"
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
+        product.stockStatus === "out_of_stock"
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock",
       seller: {
         "@type": "Organization",
         name: SITE_NAME,

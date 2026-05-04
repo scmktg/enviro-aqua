@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { getFeaturedProducts } from "@/lib/catalogue";
+import { getFeaturedProducts, mergeProductStates } from "@/lib/catalogue";
+import { getProductStates } from "@/lib/shopify/product-state";
 import { ProductCard } from "./ProductCard";
 
-export function HomeFeaturedProducts() {
-  const products = getFeaturedProducts();
+export async function HomeFeaturedProducts() {
+  const hardcoded = getFeaturedProducts();
+  const states = await getProductStates(hardcoded.map((p) => p.slug));
+  const products = mergeProductStates(hardcoded, states);
 
   return (
     <section

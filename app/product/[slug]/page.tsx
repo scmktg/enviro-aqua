@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getProductBySlug, getCrossSell, getAllProducts } from "@/lib/catalogue";
+import {
+  getProductBySlug,
+  getCrossSell,
+  getAllProducts,
+  mergeProductState,
+} from "@/lib/catalogue";
+import { getProductState } from "@/lib/shopify/product-state";
 import { getCategory } from "@/lib/categories";
 import { Breadcrumbs } from "@/components/sections/Breadcrumbs";
 import { Gallery } from "@/components/sections/Pdp/Gallery";
@@ -49,8 +55,11 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
-  if (!product) notFound();
+  const hardcoded = getProductBySlug(slug);
+  if (!hardcoded) notFound();
+
+  const liveState = await getProductState(slug);
+  const product = mergeProductState(hardcoded, liveState);
 
   const category = getCategory(product.primaryCategory);
   const crossSell = getCrossSell(product);
@@ -78,7 +87,10 @@ export default async function ProductPage({ params }: PageProps) {
           <Gallery images={product.images} alt={product.title} />
         </div>
         <div className="lg:col-span-5">
-          <BuyBox product={product} />
+          <BuyBox
+            product={product}
+            inventoryQuantity={liveState?.inventoryQuantity ?? null}
+          />
           <FitsWith product={product} />
         </div>
       </div>

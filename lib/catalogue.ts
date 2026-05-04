@@ -1,4 +1,5 @@
-import type { Product } from "@/types/product";
+import type { Product, StockStatus } from "@/types/product";
+import type { ProductState } from "./shopify/product-state";
 import { PRODUCTS } from "./catalogue-data";
 
 /**
@@ -205,6 +206,51 @@ export function filterProducts(
       return values.some((v) => selected.includes(v));
     });
   });
+}
+
+/**
+ * Merge live Shopify state into a hardcoded Product. When `state` is null
+ * (Shopify disabled, product missing, or fetch failed) the product is
+ * returned unchanged — graceful degradation keeps the page rendering.
+ *
+ * Stock derivation matches the brief:
+ *   - !availableForSale          → "out_of_stock"  (reliable, doesn't need inventory perm)
+ *   - quantity 1–5               → "low_stock"
+ *   - otherwise                  → "in_stock"
+ *
+ * `regularPrice` is preserved from the hardcoded record so the strikethrough
+ * keeps working when Shopify discounts a product. `onSale` is recomputed
+ * from the live price; if Shopify's price meets-or-exceeds `regularPrice`
+ * (e.g. a price increase since the fixture was authored) it cleanly resolves
+ * to `false` and no misleading sale badge appears.
+ */
+export function mergeProductState(
+  product: Product,
+  state: ProductState | null
+): Product {
+  if (!state) return product;
+
+  const stockStatus: StockStatus = !state.available
+    ? "out_of_stock"
+    : state.inventoryQuantity !== null &&
+      state.inventoryQuantity >= 1 &&
+      state.inventoryQuantity <= 5
+    ? "low_stock"
+    : "in_stock";
+
+  return {
+    ...product,
+    price: state.price,
+    stockStatus,
+    onSale: state.price < product.regularPrice,
+  };
+}
+
+export function mergeProductStates(
+  products: Product[],
+  states: Map<string, ProductState>
+): Product[] {
+  return products.map((p) => mergeProductState(p, states.get(p.slug) ?? null));
 }
 
 export type SortKey = "featured" | "price-asc" | "price-desc" | "newest";

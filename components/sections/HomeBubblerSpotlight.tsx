@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getProductBySlug } from "@/lib/catalogue";
+import { getProductBySlug, mergeProductState } from "@/lib/catalogue";
+import { getProductStates } from "@/lib/shopify/product-state";
 import { Price } from "@/components/ui/Price";
 import { ButtonLink } from "@/components/ui/Button";
 
@@ -18,12 +19,17 @@ const FEATURED_BUBBLERS = [
   "commercial-rust-free-filtered-cold-water-bubbler-watermark-certified",
 ];
 
-export function HomeBubblerSpotlight() {
-  const bubblers = FEATURED_BUBBLERS.map((slug) =>
+export async function HomeBubblerSpotlight() {
+  const hardcoded = FEATURED_BUBBLERS.map((slug) =>
     getProductBySlug(slug)
   ).filter((b): b is NonNullable<typeof b> => Boolean(b));
 
-  if (bubblers.length === 0) return null;
+  if (hardcoded.length === 0) return null;
+
+  const states = await getProductStates(hardcoded.map((p) => p.slug));
+  const bubblers = hardcoded.map((p) =>
+    mergeProductState(p, states.get(p.slug) ?? null)
+  );
 
   return (
     <section

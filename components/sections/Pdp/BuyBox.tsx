@@ -11,12 +11,18 @@ import { useCart } from "@/lib/stores/cart-store";
 
 interface BuyBoxProps {
   product: Product;
+  /** Live inventory count, when known. Drives the "Only N left" microcopy
+   *  on low-stock products. Omitted when Shopify isn't configured or the
+   *  inventory permission isn't granted. */
+  inventoryQuantity?: number | null;
 }
 
-export function BuyBox({ product }: BuyBoxProps) {
+export function BuyBox({ product, inventoryQuantity = null }: BuyBoxProps) {
   const [qty, setQty] = useState(1);
   const add = useCart((s) => s.add);
-  const inStock = product.stockStatus === "in_stock";
+  const isLowStock = product.stockStatus === "low_stock";
+  const isOutOfStock = product.stockStatus === "out_of_stock";
+  const inStock = !isOutOfStock;
 
   // Derive the "from" prices from the rate card so changes in
   // BUSINESS.shipping (or eventually live Shopify rates) propagate
@@ -94,6 +100,14 @@ export function BuyBox({ product }: BuyBoxProps) {
               ? `In stock — same-day dispatch from Wyong NSW (orders before ${BUSINESS.dispatch.cutoffTime})`
               : "Out of stock — call for ETA"}
           </li>
+          {isLowStock && (
+            <li className="flex items-center gap-2 text-warning font-medium">
+              <Tick />{" "}
+              {inventoryQuantity !== null && inventoryQuantity >= 1
+                ? `Only ${inventoryQuantity} left — order soon`
+                : "Low stock — order soon"}
+            </li>
+          )}
           <li className="flex items-center gap-2">
             <Tick /> Standard shipping from ${standardFrom.toFixed(2)} ·
             Express from ${expressFrom.toFixed(2)}
