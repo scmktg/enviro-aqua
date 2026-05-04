@@ -24,6 +24,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "..");
 const PRODUCTS_JSON = path.join(PROJECT_ROOT, "products.json");
+const OVERRIDES_JSON = path.join(PROJECT_ROOT, "data", "category_overrides.json");
 const OUTPUT_PATH = path.join(PROJECT_ROOT, "lib", "catalogue-data.ts");
 
 const VALID_CERTIFICATIONS = new Set([
@@ -50,6 +51,7 @@ const CATEGORY_TITLES = {
   "uv-sterilisers": "UV Sterilisers",
   "shower-filters": "Shower Filters",
   "replacement-cartridges": "Replacement Cartridges",
+  "filter-fittings": "Filter Fittings",
   "filter-taps": "Filter Taps",
   "filter-pumps": "Filter Pumps",
   "filter-tanks": "Filter Tanks",
@@ -65,6 +67,7 @@ const CATEGORY_TITLES = {
   "bathroom-taps": "Bathroom Taps",
   "kitchen-taps": "Kitchen Taps",
   "vanities-and-basins": "Vanities & Basins",
+  "bathroom-packages": "Bathroom Packages",
   "showers-and-fixtures": "Showers & Fixtures",
   "bathroom-accessories": "Bathroom Accessories",
 };
@@ -416,7 +419,86 @@ function main() {
     throw new Error("products.json: expected an array under `products`");
   }
 
-  const mapped = products.map(mapProduct);
+  // ---- Manual overrides --------------------------------------------------
+  // data/category_overrides.json carries:
+  //   - overrides:     WP_ID → [primaryCategory, subCategory] forced placement
+  //   - drop:          WP_IDs to exclude from the public catalogue
+  //   - needs_pricing: WP_IDs to render as out_of_stock until priced
+  //   - duplicates:    pairs flagged for the merchant to review in Admin
+  // The override file exists because the default rule-based mapping can't
+  // resolve every edge case — particularly the dissolution of filter-fittings
+  // and the redistribution of pumps/tanks across new sub-categories.
+  const overridesRaw = fs.readFileSync(OVERRIDES_JSON, "utf8");
+  const overridesData = JSON.parse(overridesRaw);
+  const overrideMap = new Map();
+  for (const [k, v] of Object.entries(overridesData.overrides)) {
+    overrideMap.set(Number(k), v);
+  }
+  const dropSet = new Set(overridesData.drop ?? []);
+  const needsPricingSet = new Set(overridesData.needs_pricing ?? []);
+  const duplicatePairs = overridesData.duplicates ?? [];
+
+  // Sanity-check the override file references real WP_IDs — typos here cause
+  // silent no-ops that are extremely hard to debug later.
+  const allWpIds = new Set(products.map((p) => p.old_wp_id));
+  const orphanWarnings = [];
+  for (const wp of overrideMap.keys()) {
+    if (!allWpIds.has(wp)) orphanWarnings.push(`overrides: WP_ID ${wp} not found in products.json`);
+  }
+  for (const wp of dropSet) {
+    if (!allWpIds.has(wp)) orphanWarnings.push(`drop: WP_ID ${wp} not found in products.json`);
+  }
+  for (const wp of needsPricingSet) {
+    if (!allWpIds.has(wp)) orphanWarnings.push(`needs_pricing: WP_ID ${wp} not found in products.json`);
+  }
+  for (const warning of orphanWarnings) console.warn(`[overrides] ${warning}`);
+
+  // Drop products before mapping — saves cycles and keeps the output clean.
+  const kept = products.filter((p) => !dropSet.has(p.old_wp_id));
+
+  const mapped = kept.map((p) => {
+    const product = mapProduct(p);
+
+    // Apply category override AFTER default mapping. The override defines the
+    // final destination; we re-derive categoryPath and SKU prefix because the
+    // primary may have changed (none currently do, but this stays robust).
+    if (overrideMap.has(p.old_wp_id)) {
+      const [main, sub] = overrideMap.get(p.old_wp_id);
+      product.primaryCategory = main;
+      product.subCategory = sub;
+      product.categoryPath = deriveCategoryPath(main, sub);
+      product.sku = p.sku || deriveSku(main, p.old_wp_id);
+    }
+
+    // needs_pricing → force out_of_stock so the buy box shows the unavailable
+    // state instead of a $0 add-to-cart button. Stays out_of_stock until the
+    // merchant sets a price in products.json (or in Shopify Admin once the
+    // CSV is re-imported).
+    if (needsPricingSet.has(p.old_wp_id)) {
+      product.stockStatus = "out_of_stock";
+    }
+
+    return product;
+  });
+
+  // Sanity: warn if any flagged duplicate pair is missing the `duplicate_consolidation_needed`
+  // marker in products.json. This mutation belongs in the source data, not in
+  // the generated fixture — we just surface the gap so it can be patched.
+  for (const [a, b] of duplicatePairs) {
+    for (const wp of [a, b]) {
+      const sourceProduct = products.find((p) => p.old_wp_id === wp);
+      if (!sourceProduct) {
+        console.warn(`[duplicates] WP_ID ${wp} not found in products.json`);
+        continue;
+      }
+      const flagged = (sourceProduct.migration_notes || {}).duplicate_consolidation_needed === true;
+      if (!flagged) {
+        console.warn(
+          `[duplicates] WP_ID ${wp} ("${(sourceProduct.title || "").slice(0, 60)}") missing migration_notes.duplicate_consolidation_needed in products.json`
+        );
+      }
+    }
+  }
 
   // Sanity reports — printed to stdout so they show up in CI logs and in the
   // terminal when re-running locally.
@@ -480,29 +562,34 @@ ${mapped.map(emitProduct).join("\n")}
   console.log(`  Missing price:   ${noPrice.length}  (marked out_of_stock)`);
   console.log(`  Missing certs:   ${noCerts.length}`);
 
-  // Distribution table — printed in canonical render order so the output
-  // is greppable against the spec's "expected outcome" block.
+  // Distribution table — printed in canonical render order so the output is
+  // greppable against the spec's expected counts. The third column is the
+  // expected count for the current state of products.json + the override
+  // file; mismatches don't throw (data may legitimately drift) but they
+  // surface loudly with " <-- MISMATCH" so we never ship a quiet regression.
   const RENDER_ORDER = [
-    ["water-filters", "whole-house"],
-    ["water-filters", "under-sink"],
-    ["water-filters", "reverse-osmosis"],
-    ["water-filters", "bench-top"],
-    ["water-filters", "uv-sterilisers"],
-    ["water-filters", "shower-filters"],
-    ["water-filters", "replacement-cartridges"],
-    ["water-filters", "filter-taps"],
-    ["water-filters", "filter-pumps"],
-    ["water-filters", "filter-tanks"],
-    ["bubblers-and-coolers", "commercial-bubblers"],
-    ["bubblers-and-coolers", "water-coolers"],
-    ["bubblers-and-coolers", "taps-and-cartridges"],
-    ["more", "dosing-tanks"],
-    ["more", "toilets"],
-    ["more", "bathroom-taps"],
-    ["more", "kitchen-taps"],
-    ["more", "vanities-and-basins"],
-    ["more", "showers-and-fixtures"],
-    ["more", "bathroom-accessories"],
+    ["water-filters", "whole-house", 14],
+    ["water-filters", "under-sink", 2],
+    ["water-filters", "reverse-osmosis", 9],
+    ["water-filters", "bench-top", 3],
+    ["water-filters", "uv-sterilisers", 10],
+    ["water-filters", "shower-filters", 1],
+    ["water-filters", "replacement-cartridges", 38],
+    ["water-filters", "filter-fittings", 31],
+    ["water-filters", "filter-taps", 9],
+    ["water-filters", "filter-pumps", 5],
+    ["water-filters", "filter-tanks", 12],
+    ["bubblers-and-coolers", "commercial-bubblers", 3],
+    ["bubblers-and-coolers", "water-coolers", 4],
+    ["bubblers-and-coolers", "taps-and-cartridges", 2],
+    ["more", "dosing-tanks", 1],
+    ["more", "toilets", 8],
+    ["more", "bathroom-taps", 5],
+    ["more", "kitchen-taps", 5],
+    ["more", "vanities-and-basins", 6],
+    ["more", "bathroom-packages", 12],
+    ["more", "showers-and-fixtures", 2],
+    ["more", "bathroom-accessories", 5],
   ];
   const counts = new Map();
   for (const p of mapped) {
@@ -512,19 +599,27 @@ ${mapped.map(emitProduct).join("\n")}
 
   console.log("\nDistribution by (primaryCategory / subCategory):");
   let runningTotal = 0;
+  let mismatches = 0;
   let lastTop = "";
-  for (const [main, sub] of RENDER_ORDER) {
+  for (const [main, sub, expected] of RENDER_ORDER) {
     if (main !== lastTop) {
       console.log(`  ${main}/`);
       lastTop = main;
     }
     const n = counts.get(`${main}/${sub}`) ?? 0;
     runningTotal += n;
-    const flag = n === 0 ? "  <-- EMPTY" : "";
-    console.log(`    ${sub.padEnd(24)} ${String(n).padStart(3)}${flag}`);
+    let flag = "";
+    if (n === 0) flag = "  <-- EMPTY";
+    else if (n !== expected) {
+      flag = `  <-- MISMATCH (expected ${expected})`;
+      mismatches++;
+    }
+    console.log(
+      `    ${sub.padEnd(24)} ${String(n).padStart(3)}  (exp ${String(expected).padStart(3)})${flag}`
+    );
   }
   console.log(`  ─────────────────────────────`);
-  console.log(`  Total: ${runningTotal}`);
+  console.log(`  Total: ${runningTotal}  (dropped: ${dropSet.size}, needs_pricing: ${needsPricingSet.size})`);
 
   if (runningTotal !== mapped.length) {
     throw new Error(
@@ -537,6 +632,11 @@ ${mapped.map(emitProduct).join("\n")}
         `Sub-category "${main}/${sub}" has zero products. Either the rule is missing a case or the slug is wrong.`
       );
     }
+  }
+  if (mismatches > 0) {
+    console.warn(
+      `\n[counts] ${mismatches} sub-category count(s) drifted from spec. Investigate before opening the PR.`
+    );
   }
 }
 
