@@ -34,7 +34,7 @@ const TAP_TYPES = [
     label: "Kitchen Mixers",
     productSlug: "spring-loaded-tap-kitchen-mixer-in-brushed-nickel",
     blurb: "Standard pull-out and gooseneck mixers, WELS rated.",
-    href: "/shop/bathroom/kitchen-taps",
+    href: "/shop/more/kitchen-taps",
   },
 ];
 

@@ -84,12 +84,26 @@ VENDOR = "Enviro Aqua"
 
 # Custom Shopify "Type" string (free text) — distinct from the standard
 # taxonomy "Product Category" which is validated against Shopify's tree.
+#
+# CATALOGUE STRUCTURE (3-tier, 2026-05):
+#   water-filters         — primary specialty (10 sub-cats, 119 → ~158 products)
+#   bubblers-and-coolers  — B2B drinking-water (3 sub-cats, 9 products)
+#   more                  — supporting bathroom/kitchen/specialty (7 sub-cats, ~44 products)
+#
+# Previous structures had 4 then 5 top-levels; the SKU prefix derived from
+# the top-level changes again (EA-WF / EA-BC / EA-MR). The PRODUCT_CATEGORY
+# and VARIANT_GRAMS maps below still key by SKU and are preserved as
+# historical reference; their SKUs no longer match the regenerated catalogue.
+# The merchant fills new products' Shopify category via Admin's type-ahead
+# picker post-import, and adds measured weights as products go through dispatch.
 TYPE_BY_PRIMARY = {
     "water-filters": "Water Filter",
-    "drinking-bubblers": "Drinking Bubbler",
-    "water-pumps": "Water Pump",
-    "chemical-dosing-tanks": "Chemical Dosing Tank",
-    "bathroom": "Bathroom Fixture",
+    "bubblers-and-coolers": "Drinking Bubbler",
+    # "Specialty" is a deliberate generic — the `more` top-level is a
+    # heterogeneous catch-all (toilets, vanities, dosing tanks, accessories).
+    # Setting a category-level Type that fits all of them isn't possible;
+    # the Shopify Admin UI lets the merchant override per-product.
+    "more": "Specialty",
 }
 
 # ---------------------------------------------------------------------------

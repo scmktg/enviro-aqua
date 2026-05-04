@@ -76,18 +76,12 @@ const POPULAR_BY_CATEGORY: Record<string, string[]> = {
     "under-sink-water-filter-6-stage-reverse-osmosis-system",
     "shower-filter-15-stages-includes-extra-cartridge",
   ],
-  "drinking-bubblers": [
+  "bubblers-and-coolers": [
     "commercial-water-bubbler-filtered-stainless-steel-watermark-certified-square-des",
     "filtered-hot-cold-water-cooler-direct-connect",
   ],
-  "water-pumps": [
-    "ro-water-filter-24v-dc-diaphragm-pump-reverse-osmosis-pressure-booster-pump",
-    "single-phase-submersible-clean-water-pump-370w-lift-10m",
-  ],
-  "chemical-dosing-tanks": [
+  more: [
     "chemical-dosing-tank-with-bunding-available-in-50l-100l-and-200l",
-  ],
-  bathroom: [
     "toilet-rimless-modern-watermark-ceramic-p-trap-commode-modern-2piece-toilet-wels",
     "115mm-square-tile-insert-100mm-waste-outlet-floor-drain-shower-grate",
   ],
@@ -112,16 +106,17 @@ export function getPopularForCategory(categorySlug: string): Product[] {
  */
 export function getCrossSell(product: Product): Product[] {
   const COMPLEMENTARY: Record<string, string[]> = {
-    "whole-house-filters": ["uv-sterilisers", "replacement-cartridges", "filter-fittings"],
-    "under-sink-ro-systems": ["filter-taps", "replacement-cartridges"],
-    "uv-sterilisers": ["whole-house-filters", "replacement-cartridges"],
+    "whole-house": ["uv-sterilisers", "replacement-cartridges", "filter-tanks"],
+    "under-sink": ["filter-taps", "replacement-cartridges"],
+    "reverse-osmosis": ["filter-taps", "filter-pumps", "filter-tanks"],
+    "bench-top": ["replacement-cartridges", "filter-taps"],
+    "uv-sterilisers": ["whole-house", "replacement-cartridges"],
     "shower-filters": ["replacement-cartridges"],
-    "filter-taps": ["under-sink-ro-systems", "filter-fittings"],
-    "filter-fittings": ["replacement-cartridges"],
-    "commercial-bubblers": ["bubbler-parts"],
-    "water-coolers": ["bubbler-parts"],
-    "booster-pumps": ["pressure-tanks", "filter-fittings"],
-    "pressure-tanks": ["booster-pumps", "filter-fittings"],
+    "filter-taps": ["under-sink", "reverse-osmosis"],
+    "filter-pumps": ["reverse-osmosis", "filter-tanks"],
+    "filter-tanks": ["filter-pumps", "replacement-cartridges"],
+    "commercial-bubblers": ["taps-and-cartridges"],
+    "water-coolers": ["taps-and-cartridges"],
   };
 
   const targets = COMPLEMENTARY[product.subCategory] ?? [];

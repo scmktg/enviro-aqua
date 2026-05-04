@@ -5,14 +5,16 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   {
     heading: "Shop",
     links: [
-      { label: "Whole House Filters", href: "/shop/water-filters/whole-house-filters" },
-      { label: "Under Sink & RO", href: "/shop/water-filters/under-sink-ro-systems" },
+      // Top-trafficked categories only (per GSC). The mega-menu + sitemap
+      // surface the full 20-sub-category list; the footer is for the
+      // categories customers actually search for.
+      { label: "Whole House Filters", href: "/shop/water-filters/whole-house" },
+      { label: "Reverse Osmosis", href: "/shop/water-filters/reverse-osmosis" },
       { label: "UV Sterilisers", href: "/shop/water-filters/uv-sterilisers" },
+      { label: "Shower Filters", href: "/shop/water-filters/shower-filters" },
       { label: "Replacement Cartridges", href: "/shop/water-filters/replacement-cartridges" },
       { label: "Filter Taps", href: "/shop/water-filters/filter-taps" },
-      { label: "Drinking Bubblers", href: "/shop/drinking-bubblers" },
-      { label: "Water Pumps", href: "/shop/water-pumps" },
-      { label: "Bathroom", href: "/shop/bathroom" },
+      { label: "Commercial Bubblers", href: "/shop/bubblers-and-coolers/commercial-bubblers" },
     ],
   },
   {

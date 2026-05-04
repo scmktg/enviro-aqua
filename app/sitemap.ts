@@ -12,20 +12,16 @@ const BASE =
  * we use it to communicate intent, not absolute crawl rate.
  *
  *   water-filters         → 0.9   (primary specialty)
- *   drinking-bubblers     → 0.8   (secondary specialty)
- *   water-pumps           → 0.6   (filtration support equipment)
- *   chemical-dosing-tanks → 0.5   (niche commercial)
- *   bathroom              → 0.4   (de-emphasised — fit-out support)
+ *   bubblers-and-coolers  → 0.8   (B2B drinking-water specialty)
+ *   more                  → 0.5   (de-emphasised — supporting ranges)
  *
  * Sub-categories inherit and step down by 0.1; products step down by
  * a further 0.1.
  */
 const CATEGORY_PRIORITY: Record<string, number> = {
   "water-filters": 0.9,
-  "drinking-bubblers": 0.8,
-  "water-pumps": 0.6,
-  "chemical-dosing-tanks": 0.5,
-  bathroom: 0.4,
+  "bubblers-and-coolers": 0.8,
+  more: 0.5,
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -63,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
     },
     {
-      url: `${BASE}/drinking-bubblers`,
+      url: `${BASE}/bubblers-and-coolers`,
       lastModified: now,
       priority: 0.85,
       changeFrequency: "monthly",

@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     "WaterMark Certified Commercial Bubblers - Ready to Install | Enviro Aqua",
   description:
     "Three WaterMark-certified commercial drinking bubblers, ready to ship from Wyong NSW. Filters pre-installed, standard half-inch connection, your plumber installs in under an hour. For schools, gyms and offices.",
-  alternates: { canonical: "/drinking-bubblers" },
+  alternates: { canonical: "/bubblers-and-coolers" },
   openGraph: {
     title: "WaterMark Certified Commercial Bubblers - Ready to Install",
     description:
       "Pick a model, we ship same-day. Filters pre-installed, plumber connects to a standard half-inch inlet.",
-    url: "/drinking-bubblers",
+    url: "/bubblers-and-coolers",
     type: "website",
   },
 };
@@ -66,7 +66,7 @@ export default function CommercialBubblersPage() {
           { label: "Home", href: "/" },
           {
             label: "Drinking Bubblers",
-            href: "/drinking-bubblers",
+            href: "/bubblers-and-coolers",
           },
         ]}
       />

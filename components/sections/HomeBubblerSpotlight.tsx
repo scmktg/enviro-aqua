@@ -60,7 +60,7 @@ export async function HomeBubblerSpotlight() {
         {bubblers.map((bubbler) => (
           <li key={bubbler.id}>
             <Link
-              href="/drinking-bubblers"
+              href="/bubblers-and-coolers"
               className="group block h-full bg-paper border border-line hover:border-ink rounded-sm overflow-hidden transition-colors duration-fast"
             >
               <article className="h-full flex flex-col">
@@ -114,7 +114,7 @@ export async function HomeBubblerSpotlight() {
       </ul>
 
       <div className="mt-10 flex flex-col sm:flex-row gap-3">
-        <ButtonLink href="/drinking-bubblers">
+        <ButtonLink href="/bubblers-and-coolers">
           View commercial bubbler range
         </ButtonLink>
         <ButtonLink href="/contact" variant="ghost">

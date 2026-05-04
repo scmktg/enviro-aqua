@@ -30,7 +30,7 @@ export function HomeBathroomStrip() {
           for fit-out projects already buying filtration from us.
         </p>
         <Link
-          href="/shop/bathroom"
+          href="/shop/more"
           className="text-sm font-medium text-brand hover:text-brand-700 transition-colors duration-fast inline-flex items-center gap-1.5 lg:justify-self-end"
         >
           Browse bathroom

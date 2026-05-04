@@ -9,10 +9,8 @@ export type StockStatus = "in_stock" | "out_of_stock" | "low_stock";
 
 export type PrimaryCategory =
   | "water-filters"
-  | "drinking-bubblers"
-  | "water-pumps"
-  | "chemical-dosing-tanks"
-  | "bathroom";
+  | "bubblers-and-coolers"
+  | "more";
 
 /**
  * Certifications a product genuinely carries. Only set on products where
